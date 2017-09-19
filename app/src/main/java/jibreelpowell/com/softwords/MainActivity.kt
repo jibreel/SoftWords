@@ -1,5 +1,6 @@
 package jibreelpowell.com.softwords
 
+import android.databinding.BaseObservable
 import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +12,22 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding : ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.textView.setText(Pattern.random().sentence())
+        binding.presenter = MainActivityPresenter()
     }
 }
+
+class MainActivityPresenter: BaseObservable() {
+
+    lateinit var sentence: String
+
+    init {
+        generateNewSentence()
+    }
+
+    fun generateNewSentence() {
+        sentence = Pattern.random().sentence()
+        notifyChange()
+    }
+
+}
+

@@ -7,7 +7,7 @@ import java.util.*
  */
 
 fun ClosedRange<Int>.random() : Int {
-    val range = endInclusive - start
+    val range = (endInclusive - start) + 1
     when {
         range == 0 -> return start
         range > 0 -> return Random().nextInt(range) + start
@@ -18,3 +18,9 @@ fun ClosedRange<Int>.random() : Int {
 fun <T> Array<T>.random() = this[(0..lastIndex).random()]
 
 fun <T> List<T>.random() = this[(0..lastIndex).random()]
+
+fun Char.isVowel() =
+        when (this.toLowerCase()) {
+            'a', 'e', 'i', 'o', 'u' -> true
+            else -> false
+        }
