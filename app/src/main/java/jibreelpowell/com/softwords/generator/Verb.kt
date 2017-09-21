@@ -39,9 +39,9 @@ class Verb(
         }
 
 
-    companion object Library{
+    companion object Library {
 
-        val words: List<Verb> = listOf(
+        val verbs: List<Verb> = listOf(
                 Verb("fall"),
                 Verb("swim"),
                 Verb(i = "am", we = "are", you = "are", it = "is", they = "are"),
@@ -55,7 +55,7 @@ class Verb(
                 Verb("write")
         )
 
-        fun random(): Verb = words.random()
+        fun random(): Verb = verbs.random()
     }
 }
 

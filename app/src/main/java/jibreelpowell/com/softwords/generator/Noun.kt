@@ -26,7 +26,7 @@ class Noun(singular: String, plural: String): Word() {
 
     companion object NounLibrary {
 
-        val words: List<Noun> = listOf(
+        val nouns: List<Noun> = listOf(
                 Noun("leaf", "leaves"),
                 Noun("water"),
                 Noun("rock"),
@@ -39,7 +39,7 @@ class Noun(singular: String, plural: String): Word() {
                 Noun("word")
         )
 
-        fun random() = words.random()
+        fun random() = nouns.random()
     }
 }
 

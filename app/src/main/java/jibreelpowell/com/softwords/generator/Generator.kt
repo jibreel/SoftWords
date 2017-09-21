@@ -6,8 +6,7 @@ import java.util.*
 enum class Pattern {
     NounVerb {
         override fun sentence(): String {
-            val isSingular = Random().nextBoolean()
-            val number: GrammaticalNumber = GrammaticalNumber.get(isSingular)
+            val number: GrammaticalNumber = GrammaticalNumber.get(Random().nextBoolean())
             val noun = Noun.random()
             noun.number = number
             val verb = Verb.random()
@@ -19,8 +18,7 @@ enum class Pattern {
 
     ArticleNounVerb {
         override fun sentence(): String {
-            val isSingular = Random().nextBoolean()
-            val number = GrammaticalNumber.get(isSingular)
+            val number = GrammaticalNumber.get(Random().nextBoolean())
             val articleType = ArticleType.get(Random().nextBoolean())
             val noun = Noun.random()
             noun.number = number
@@ -31,6 +29,42 @@ enum class Pattern {
             return sentence(article, noun, verb)
         }
 
+    },
+
+    NounPrepositionNoun {
+        override fun sentence(): String {
+            val number1 = GrammaticalNumber.get(Random().nextBoolean())
+            val articleType1 = ArticleType.get(Random().nextBoolean())
+            val noun1 = Noun.random()
+            noun1.number = number1
+            val article1 = noun1.article(articleType1)
+            val number2 = GrammaticalNumber.get(Random().nextBoolean())
+            val articleType2 = ArticleType.get(Random().nextBoolean())
+            val noun2 = Noun.random()
+            noun2.number = number2
+            val article2 = noun2.article(articleType2)
+            val preposition = Preposition.random()
+            return sentence(article1, noun1, preposition, article2, noun2)
+        }
+    },
+
+    NounPrepositionVerbNoun {
+        override fun sentence(): String {
+            val number1 = GrammaticalNumber.get(Random().nextBoolean())
+            val articleType1 = ArticleType.get(Random().nextBoolean())
+            val noun1 = Noun.random()
+            noun1.number = number1
+            val article1 = noun1.article(articleType1)
+            val number2 = GrammaticalNumber.get(Random().nextBoolean())
+            val articleType2 = ArticleType.get(Random().nextBoolean())
+            val noun2 = Noun.random()
+            noun2.number = number2
+            val article2 = noun2.article(articleType2)
+            val verb = Verb.random()
+            verb.number = number1
+            verb.person = THIRD
+            return sentence(article1, noun1, verb, article2, noun2)
+        }
     };
 
     abstract fun sentence(): String
