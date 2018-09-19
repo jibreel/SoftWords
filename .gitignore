@@ -9,4 +9,5 @@
 .externalNativeBuild
 libs/
 /.idea/vcs.xml
+/.idea/codeStyles
 .gitignore
