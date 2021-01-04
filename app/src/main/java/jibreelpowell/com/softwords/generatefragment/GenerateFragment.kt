@@ -1,4 +1,6 @@
 package jibreelpowell.com.softwords.generatefragment
 
-class GenerateFragment {
+import androidx.fragment.app.Fragment
+
+class GenerateFragment: Fragment() {
 }

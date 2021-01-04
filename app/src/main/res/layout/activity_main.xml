@@ -7,14 +7,14 @@
     <data>
         <variable
             name="presenter"
-            type="jibreelpowell.com.softwords.MainActivityPresenter"
+            type="jibreelpowell.com.softwords.mainactivity.MainActivityPresenter"
             />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="jibreelpowell.com.softwords.MainActivity">
+        tools:context="jibreelpowell.com.softwords.mainactivity.MainActivity">
 
         <TextView
             android:id="@+id/text_view"
