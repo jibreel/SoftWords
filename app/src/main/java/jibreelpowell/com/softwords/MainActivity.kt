@@ -1,8 +1,8 @@
 package jibreelpowell.com.softwords
 
-import android.databinding.BaseObservable
-import android.databinding.DataBindingUtil
-import android.support.v7.app.AppCompatActivity
+import androidx.databinding.BaseObservable
+import androidx.databinding.DataBindingUtil
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import jibreelpowell.com.softwords.databinding.ActivityMainBinding
 import jibreelpowell.com.softwords.generator.Pattern
