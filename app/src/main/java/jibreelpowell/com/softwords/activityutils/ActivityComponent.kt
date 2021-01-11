@@ -7,7 +7,7 @@ import dagger.Subcomponent
 import jibreelpowell.com.softwords.mainactivity.MainActivity
 
 @ActivityScope
-@Subcomponent()
+@Subcomponent
 interface ActivityComponent {
 
     @Subcomponent.Factory
