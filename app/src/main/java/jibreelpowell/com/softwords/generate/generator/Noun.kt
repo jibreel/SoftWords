@@ -1,6 +1,6 @@
-package jibreelpowell.com.softwords.generator
+package jibreelpowell.com.softwords.generate.generator
 
-import jibreelpowell.com.softwords.generator.GrammaticalNumber.*
+import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.*
 
 class Noun(singular: String, plural: String): Word() {
     val singular: String = singular.toLowerCase()

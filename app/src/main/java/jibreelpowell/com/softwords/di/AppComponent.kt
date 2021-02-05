@@ -1,8 +1,10 @@
-package jibreelpowell.com.softwords.app
+package jibreelpowell.com.softwords.di
 
 import dagger.BindsInstance
 import dagger.Component
 import jibreelpowell.com.softwords.activityutils.ActivityComponent
+import jibreelpowell.com.softwords.app.App
+import jibreelpowell.com.softwords.app.AppModule
 import javax.inject.Singleton
 
 @Singleton

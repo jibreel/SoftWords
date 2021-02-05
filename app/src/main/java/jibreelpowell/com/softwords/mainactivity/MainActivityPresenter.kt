@@ -1,7 +1,7 @@
 package jibreelpowell.com.softwords.mainactivity
 
 import androidx.databinding.BaseObservable
-import jibreelpowell.com.softwords.generator.Pattern
+import jibreelpowell.com.softwords.generate.generator.Pattern
 import javax.inject.Inject
 
 class MainActivityPresenter @Inject constructor(): BaseObservable() {

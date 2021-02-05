@@ -1,4 +1,4 @@
-package jibreelpowell.com.softwords.generatefragment
+package jibreelpowell.com.softwords.generate
 
 import androidx.fragment.app.Fragment
 
