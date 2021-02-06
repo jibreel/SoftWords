@@ -5,10 +5,11 @@ import dagger.Component
 import jibreelpowell.com.softwords.activityutils.ActivityComponent
 import jibreelpowell.com.softwords.app.App
 import jibreelpowell.com.softwords.app.AppModule
+import jibreelpowell.com.softwords.generate.GenerateComponent
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class])
+@Component(modules = [AppSubcomponents::class])
 interface AppComponent {
     fun inject(app: App)
 
@@ -18,4 +19,5 @@ interface AppComponent {
     }
 
     fun activityComponent(): ActivityComponent.Factory
+    fun generateComponent(): GenerateComponent
 }
