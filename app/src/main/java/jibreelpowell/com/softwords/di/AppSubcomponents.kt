@@ -4,5 +4,4 @@ import dagger.Module
 import jibreelpowell.com.softwords.generate.GenerateComponent
 
 @Module(subcomponents = [GenerateComponent::class])
-class AppSubcomponents {
-}
+class AppSubcomponents

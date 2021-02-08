@@ -4,10 +4,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import jibreelpowell.com.softwords.R
-import jibreelpowell.com.softwords.app.App
 import jibreelpowell.com.softwords.databinding.ActivityMainBinding
+import jibreelpowell.com.softwords.generate.GenerateComponent
 import jibreelpowell.com.softwords.utils.app
-import jibreelpowell.com.softwords.utils.createActivityComponent
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -15,9 +14,10 @@ class MainActivity : AppCompatActivity() {
     @Inject lateinit var presenter: MainActivityPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        app.component.generateComponent().inject(this)
+        app.component.generateComponent().create().inject(this)
         super.onCreate(savedInstanceState)
-        val binding : ActivityMainBinding = DataBindingUtil.setContentView(this,
+        val binding : ActivityMainBinding = DataBindingUtil.setContentView(
+            this,
             R.layout.activity_main
         )
         binding.presenter = presenter

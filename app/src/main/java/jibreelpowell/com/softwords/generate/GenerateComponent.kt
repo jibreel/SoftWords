@@ -1,7 +1,7 @@
 package jibreelpowell.com.softwords.generate
 
 import dagger.Subcomponent
-import jibreelpowell.com.softwords.activityutils.ActivityScope
+import jibreelpowell.com.softwords.di.ActivityScope
 import jibreelpowell.com.softwords.mainactivity.MainActivity
 
 @ActivityScope

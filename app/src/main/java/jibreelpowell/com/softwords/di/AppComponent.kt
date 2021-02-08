@@ -2,9 +2,7 @@ package jibreelpowell.com.softwords.di
 
 import dagger.BindsInstance
 import dagger.Component
-import jibreelpowell.com.softwords.activityutils.ActivityComponent
 import jibreelpowell.com.softwords.app.App
-import jibreelpowell.com.softwords.app.AppModule
 import jibreelpowell.com.softwords.generate.GenerateComponent
 import javax.inject.Singleton
 
@@ -18,6 +16,5 @@ interface AppComponent {
         fun create(@BindsInstance app: App): AppComponent
     }
 
-    fun activityComponent(): ActivityComponent.Factory
-    fun generateComponent(): GenerateComponent
+    fun generateComponent(): GenerateComponent.Factory
 }

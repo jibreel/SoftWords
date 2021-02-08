@@ -1,4 +1,4 @@
-package jibreelpowell.com.softwords.activityutils
+package jibreelpowell.com.softwords.di
 
 import javax.inject.Scope
 
