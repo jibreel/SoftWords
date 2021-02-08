@@ -1,7 +1,7 @@
-package jibreelpowell.com.softwords.generator
+package jibreelpowell.com.softwords.generate.generator
 
-import jibreelpowell.com.softwords.generator.GrammaticalNumber.*
-import jibreelpowell.com.softwords.generator.GrammaticalPerson.*
+import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.*
+import jibreelpowell.com.softwords.generate.generator.GrammaticalPerson.*
 
 class Verb(
         i: String,

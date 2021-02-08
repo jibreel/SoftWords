@@ -1,6 +1,6 @@
-package jibreelpowell.com.softwords.generator
+package jibreelpowell.com.softwords.generate.generator
 
-import jibreelpowell.com.softwords.generator.GrammaticalPerson.*
+import jibreelpowell.com.softwords.generate.generator.GrammaticalPerson.*
 import java.util.*
 
 enum class Pattern {

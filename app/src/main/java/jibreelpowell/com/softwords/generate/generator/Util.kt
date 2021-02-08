@@ -1,4 +1,4 @@
-package jibreelpowell.com.softwords.generator
+package jibreelpowell.com.softwords.generate.generator
 
 import java.util.*
 

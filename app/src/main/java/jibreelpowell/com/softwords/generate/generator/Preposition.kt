@@ -1,4 +1,4 @@
-package jibreelpowell.com.softwords.generator
+package jibreelpowell.com.softwords.generate.generator
 
 class Preposition(name: String): Word() {
     val name: String = name.toLowerCase()
