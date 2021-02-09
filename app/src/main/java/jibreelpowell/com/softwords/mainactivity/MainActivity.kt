@@ -7,11 +7,10 @@ import jibreelpowell.com.softwords.R
 import jibreelpowell.com.softwords.databinding.ActivityMainBinding
 import jibreelpowell.com.softwords.generate.GenerateComponent
 import jibreelpowell.com.softwords.utils.app
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    @Inject lateinit var presenter: MainActivityPresenter
+    lateinit var generateComponent: GenerateComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         app.component.generateComponent().create().inject(this)
@@ -20,7 +19,6 @@ class MainActivity : AppCompatActivity() {
             this,
             R.layout.activity_main
         )
-        binding.presenter = presenter
     }
 }
 

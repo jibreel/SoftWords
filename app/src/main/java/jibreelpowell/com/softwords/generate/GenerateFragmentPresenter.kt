@@ -1,10 +1,10 @@
-package jibreelpowell.com.softwords.mainactivity
+package jibreelpowell.com.softwords.generate
 
 import androidx.databinding.BaseObservable
 import jibreelpowell.com.softwords.generate.generator.Pattern
 import javax.inject.Inject
 
-class MainActivityPresenter @Inject constructor(): BaseObservable() {
+class GenerateFragmentPresenter @Inject constructor(): BaseObservable() {
 
     lateinit var sentence: String
 

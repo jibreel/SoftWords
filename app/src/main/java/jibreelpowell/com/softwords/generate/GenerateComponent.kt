@@ -14,4 +14,5 @@ interface GenerateComponent {
     }
 
     fun inject(activity: MainActivity)
+    fun inject(generateFragment: GenerateFragment)
 }
