@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SoftWords</string>
     <string name="navigation_generate_title">Generator</string>
+    <string name="navigation_history_title">History</string>
 </resources>

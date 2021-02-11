@@ -3,7 +3,11 @@
 
     <item
         android:id="@+id/navigation_generate"
-        android:title="@string/navigation_generate_title"
         android:icon="@drawable/ic_generate"
-        />
+        android:title="@string/navigation_generate_title" />
+
+    <item
+        android:id="@+id/navigation_history"
+        android:icon="@drawable/ic_history"
+        android:title="@string/navigation_history_title" />
 </menu>

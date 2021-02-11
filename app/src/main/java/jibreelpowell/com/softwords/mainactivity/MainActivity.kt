@@ -11,6 +11,8 @@ import jibreelpowell.com.softwords.utils.app
 class MainActivity : AppCompatActivity() {
 
     lateinit var generateComponent: GenerateComponent
+    
+//    val bottomNavigationItemSelectedListener: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         app.component.generateComponent().create().inject(this)
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
             this,
             R.layout.activity_main
         )
+
     }
 }
 
