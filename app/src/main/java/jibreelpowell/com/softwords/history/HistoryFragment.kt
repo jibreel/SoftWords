@@ -28,5 +28,4 @@ class HistoryFragment : Fragment() {
         return binding.root
     }
 
-
 }

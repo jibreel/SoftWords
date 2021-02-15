@@ -2,4 +2,6 @@
     <string name="app_name">SoftWords</string>
     <string name="navigation_generate_title">Generator</string>
     <string name="navigation_history_title">History</string>
+    <string name="history_title">Sentence Generation History</string>
+    <string name="history_icon">History Icon</string>
 </resources>
