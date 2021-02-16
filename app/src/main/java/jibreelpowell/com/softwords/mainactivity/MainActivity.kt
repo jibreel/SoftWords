@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var generateComponent: GenerateComponent
 
-    val bottomNavigationItemSelectedListener =
+    val itemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_generate -> {
@@ -42,13 +42,14 @@ class MainActivity : AppCompatActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        app.component.generateComponent().create().inject(this)
+        generateComponent = app.component.generateComponent().create()
+        generateComponent.inject(this)
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(
             this,
             R.layout.activity_main
         )
-
+        binding.navView.setOnNavigationItemSelectedListener(itemSelectedListener)
     }
 }
 
