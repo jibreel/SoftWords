@@ -8,9 +8,9 @@ import java.util.*
 
 fun ClosedRange<Int>.random() : Int {
     val range = (endInclusive - start) + 1
-    when {
-        range == 0 -> return start
-        range > 0 -> return Random().nextInt(range) + start
+    return when {
+        range == 0 -> start
+        range > 0 -> Random().nextInt(range) + start
         else -> throw IllegalStateException("Range must be positive")
     }
 }
