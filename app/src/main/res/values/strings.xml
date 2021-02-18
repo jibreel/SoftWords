@@ -4,4 +4,6 @@
     <string name="navigation_history_title">History</string>
     <string name="history_title">Sentence Generation History</string>
     <string name="history_icon">History Icon</string>
+    <string name="generate_fragment_title">Random Sentence Generation</string>
+    <string name="history_fragment_title">Generation History</string>
 </resources>

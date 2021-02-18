@@ -27,7 +27,7 @@
             app:menu="@menu/bottom_nav_menu" />
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/main_fragment_container"
+            android:id="@+id/main_nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             app:navGraph="@navigation/main_activity_graph"
             app:defaultNavHost="true"

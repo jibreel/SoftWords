@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import jibreelpowell.com.softwords.R
 import jibreelpowell.com.softwords.databinding.ActivityMainBinding
@@ -22,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.navigation_generate -> {
                     supportFragmentManager.commit {
-                        replace<GenerateFragment>(R.id.main_fragment_container)
+                        replace<GenerateFragment>(R.id.main_nav_host_fragment)
                         setReorderingAllowed(true)
                         addToBackStack(null)
                     }
@@ -30,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navigation_history -> {
                     supportFragmentManager.commit {
-                        replace<HistoryFragment>(R.id.main_fragment_container)
+                        replace<HistoryFragment>(R.id.main_nav_host_fragment)
                         setReorderingAllowed(true)
                         addToBackStack(null)
                     }
@@ -49,7 +53,16 @@ class MainActivity : AppCompatActivity() {
             this,
             R.layout.activity_main
         )
-        binding.navView.setOnNavigationItemSelectedListener(itemSelectedListener)
+        val navView = binding.navView
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_history, R.id.navigation_generate
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
     }
 }
 
