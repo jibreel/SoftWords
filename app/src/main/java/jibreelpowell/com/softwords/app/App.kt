@@ -11,8 +11,6 @@ class App: Application() {
         super.onCreate()
         component = DaggerAppComponent
             .factory()
-            .create(this)
-
-        component.inject(this)
+            .create(applicationContext)
     }
 }

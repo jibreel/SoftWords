@@ -1,19 +1,18 @@
 package jibreelpowell.com.softwords.di
 
+import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
-import jibreelpowell.com.softwords.app.App
 import jibreelpowell.com.softwords.generate.GenerateComponent
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppSubcomponents::class])
+@Component(modules = [StorageModule::class, AppSubcomponents::class])
 interface AppComponent {
-    fun inject(app: App)
 
     @Component.Factory
     interface Factory {
-        fun create(@BindsInstance app: App): AppComponent
+        fun create(@BindsInstance context: Context): AppComponent
     }
 
     fun generateComponent(): GenerateComponent.Factory
