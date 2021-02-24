@@ -6,4 +6,6 @@
     <string name="history_icon">History Icon</string>
     <string name="generate_fragment_title">Random Sentence Generation</string>
     <string name="history_fragment_title">Generation History</string>
+    <string name="generate_store_button_text">Save This Sentence</string>
+    <string name="generate_generate_button_text">New Sentence</string>
 </resources>

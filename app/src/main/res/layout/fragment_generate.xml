@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context='.generate.GenerateFragment'
-    >
+    tools:context='.generate.GenerateFragment'>
 
     <data>
+
         <variable
             name="presenter"
-            type="jibreelpowell.com.softwords.generate.GenerateFragmentPresenter"
-            />
+            type="jibreelpowell.com.softwords.generate.GenerateFragmentPresenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +16,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/text_view"
+            android:id="@+id/generate_fragment_text_view_sentence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{presenter.sentence}"
@@ -28,23 +26,36 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Sentence"
-            />
+            tools:text="Sentence" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/generate_fragment_button_generate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="New Sentence"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:onClick="@{() -> presenter.generateNewSentence()}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/generate_generate_button_text"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintBottom_toTopOf="@id/generate_fragment_button_store"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view"/>
+            app:layout_constraintTop_toBottomOf="@+id/generate_fragment_text_view_sentence" />
+
+        <Button
+            android:id="@+id/generate_fragment_button_store"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/generate_store_button_text"
+            android:onClick="@{() -> presenter.storeCurrentSentence()}"
+            app:layout_constraintTop_toBottomOf="@id/generate_fragment_button_generate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
