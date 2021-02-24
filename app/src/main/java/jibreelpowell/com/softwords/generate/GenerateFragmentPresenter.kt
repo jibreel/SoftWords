@@ -1,12 +1,16 @@
 package jibreelpowell.com.softwords.generate
 
 import androidx.databinding.BaseObservable
+import io.reactivex.rxjava3.observers.DisposableCompletableObserver
 import jibreelpowell.com.softwords.generate.generator.Pattern
 import jibreelpowell.com.softwords.storage.GeneratedSentence
 import jibreelpowell.com.softwords.storage.SentencesDao
+import jibreelpowell.com.softwords.utils.scheduleCompletableInBackground
+import timber.log.Timber
 import javax.inject.Inject
 
-class GenerateFragmentPresenter @Inject constructor(val sentencesDao: SentencesDao): BaseObservable() {
+class GenerateFragmentPresenter @Inject constructor(val sentencesDao: SentencesDao) :
+    BaseObservable() {
 
     lateinit var sentence: String
 
@@ -21,6 +25,16 @@ class GenerateFragmentPresenter @Inject constructor(val sentencesDao: SentencesD
 
     fun storeCurrentSentence() {
         sentencesDao.insertAll(GeneratedSentence.newInstance(sentence))
+            .scheduleCompletableInBackground()
+            .subscribeWith(object : DisposableCompletableObserver() {
+                override fun onComplete() {
+                    Timber.d("Insert Complete!")
+                }
+
+                override fun onError(e: Throwable?) {
+                    Timber.e(e)
+                }
+            })
     }
 
 }
