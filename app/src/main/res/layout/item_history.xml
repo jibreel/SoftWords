@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:strokeColor="@android:color/darker_gray"
-        app:strokeWidth="@dimen/spacing_xxsmall_2"
+        app:strokeWidth="1dp"
+        android:elevation="0dp"
         android:layout_marginHorizontal="@dimen/spacing_medium_16"
         android:layout_marginVertical="@dimen/spacing_small_8"
         >
@@ -22,8 +23,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/spacing_medium_16"
-            android:paddingVertical="@dimen/spacing_small_8"
+            android:paddingHorizontal="@dimen/spacing_large_24"
+            android:paddingVertical="@dimen/spacing_medium_16"
             >
 
             <ImageView
