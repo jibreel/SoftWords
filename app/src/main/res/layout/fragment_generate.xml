@@ -29,9 +29,11 @@
             tools:text="Sentence" />
 
         <Button
+            style="@style/Widget.MaterialComponents.Button"
             android:id="@+id/generate_fragment_button_generate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_medium_16"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
@@ -45,9 +47,11 @@
             app:layout_constraintTop_toBottomOf="@+id/generate_fragment_text_view_sentence" />
 
         <Button
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:id="@+id/generate_fragment_button_store"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_medium_16"
             android:text="@string/generate_store_button_text"
             android:onClick="@{() -> presenter.storeCurrentSentence()}"
             app:layout_constraintTop_toBottomOf="@id/generate_fragment_button_generate"
