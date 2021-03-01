@@ -18,6 +18,8 @@
         android:layout_width="match_parent"
         app:adapter="@{presenter.historyAdapter}"
         tools:listitem="@layout/item_history"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
         />
 
 </layout>

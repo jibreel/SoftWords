@@ -13,9 +13,6 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:strokeWidth="2dp"
-        app:strokeColor="@color/colorPrimaryDark"
-        app:cardElevation="0dp"
         android:layout_marginHorizontal="@dimen/spacing_medium_16"
         android:layout_marginVertical="@dimen/spacing_small_8"
         >
