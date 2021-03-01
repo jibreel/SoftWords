@@ -27,6 +27,6 @@ class HistoryAdapter @Inject constructor(
     }
 
     override fun bind(binding: ItemHistoryBinding, item: GeneratedSentence) {
-        binding.presenter.bind(item)
+        binding.presenter?.let { it.bind(item) }
     }
 }
