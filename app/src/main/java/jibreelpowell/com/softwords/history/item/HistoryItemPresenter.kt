@@ -10,7 +10,7 @@ class HistoryItemPresenter @Inject constructor() {
     val sentence = ObservableField<String>()
     val timestamp = ObservableField<String>()
 
-    private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/YY hh:mm a")
+    private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("M/d/YYYY h:mm a")
 
     fun bind(generatedSentence: GeneratedSentence) {
         this.sentence.set(generatedSentence.sentence)
