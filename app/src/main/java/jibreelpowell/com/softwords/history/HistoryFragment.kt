@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class HistoryFragment : Fragment() {
 
-    @Inject lateinit var presenter: HistoryPresenter
+    @Inject lateinit var viewModel: HistoryViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -24,7 +24,7 @@ class HistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentHistoryBinding.inflate(inflater, container, false)
-        binding.presenter = presenter
+        binding.presenter = viewModel
         return binding.root
     }
 

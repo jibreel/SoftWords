@@ -1,12 +1,13 @@
 package jibreelpowell.com.softwords.history
 
 import androidx.databinding.ObservableField
+import androidx.lifecycle.ViewModel
 import jibreelpowell.com.softwords.storage.SentencesDao
 import jibreelpowell.com.softwords.utils.scheduleFlowableInBackground
 import timber.log.Timber
 import javax.inject.Inject
 
-class HistoryPresenter @Inject constructor(sentencesDao: SentencesDao) {
+class HistoryViewModel @Inject constructor(sentencesDao: SentencesDao) : ViewModel()  {
 
     init {
         sentencesDao.loadAllSentences()

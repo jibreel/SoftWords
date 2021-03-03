@@ -9,7 +9,7 @@
     <data>
         <variable
             name="presenter"
-            type="jibreelpowell.com.softwords.history.HistoryPresenter"
+            type="jibreelpowell.com.softwords.history.HistoryViewModel"
             />
     </data>
 
