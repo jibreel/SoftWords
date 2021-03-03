@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".history.HistoryFragment"
-    >
+    tools:context=".history.HistoryFragment">
 
     <data>
+
         <variable
-            name="presenter"
-            type="jibreelpowell.com.softwords.history.HistoryViewModel"
-            />
+            name="viewModel"
+            type="jibreelpowell.com.softwords.history.HistoryViewModel" />
     </data>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_height="match_parent"
+        android:id="@+id/history_recycler_view"
         android:layout_width="match_parent"
-        app:adapter="@{presenter.historyAdapter}"
-        tools:listitem="@layout/item_history"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_history" />
 
 </layout>

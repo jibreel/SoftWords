@@ -8,5 +8,5 @@ import jibreelpowell.com.softwords.utils.Converters
 @Database(entities = [GeneratedSentence::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun sentencesDao(): SentencesDao
+    abstract fun sentencesDao(): SentenceDao
 }

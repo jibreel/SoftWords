@@ -15,6 +15,7 @@ import javax.inject.Inject
 class HistoryFragment : Fragment() {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject lateinit var adapter: HistoryAdapter
 
     private val viewModel: HistoryViewModel by viewModels {
         viewModelFactory
@@ -30,7 +31,13 @@ class HistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentHistoryBinding.inflate(inflater, container, false)
-        binding.presenter = viewModel
+
+        viewModel.allSentences.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
+
+        binding.viewModel = viewModel
+        binding.historyRecyclerView.adapter = adapter
         return binding.root
     }
 
