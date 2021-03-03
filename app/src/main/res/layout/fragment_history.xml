@@ -13,46 +13,13 @@
             />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_height="match_parent"
-        >
-
-        <ImageView
-            android:id="@+id/history_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:contentDescription="@string/history_icon"
-            android:src="@drawable/ic_history"
-            app:layout_constraintBottom_toTopOf="@id/history_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/history_title"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
-            app:layout_constraintTop_toBottomOf="@id/history_icon"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="@dimen/spacing_medium_16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/history_title"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/history_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@{presenter.historyText}"
-            tools:text="galaxies fortell"
-            />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_width="match_parent"
+        app:adapter="@{presenter.historyAdapter}"
+        tools:listitem="@layout/item_history"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
+        />
 
 </layout>
