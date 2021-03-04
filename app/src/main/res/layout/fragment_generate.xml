@@ -7,8 +7,8 @@
     <data>
 
         <variable
-            name="presenter"
-            type="jibreelpowell.com.softwords.generate.GenerateFragmentPresenter" />
+            name="viewModel"
+            type="jibreelpowell.com.softwords.generate.GenerateViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +19,7 @@
             android:id="@+id/generate_fragment_text_view_sentence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{presenter.sentence}"
+            android:text="@{viewModel.sentence}"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -38,7 +38,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:onClick="@{() -> presenter.generateNewSentence()}"
+            android:onClick="@{() -> viewModel.generateNewSentence()}"
             android:text="@string/generate_generate_button_text"
             app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintBottom_toTopOf="@id/generate_fragment_button_store"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/spacing_medium_16"
             android:text="@string/generate_store_button_text"
-            android:onClick="@{() -> presenter.storeCurrentSentence()}"
+            android:onClick="@{() -> viewModel.storeCurrentSentence()}"
             app:layout_constraintTop_toBottomOf="@id/generate_fragment_button_generate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

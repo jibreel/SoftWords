@@ -13,7 +13,7 @@ import javax.inject.Inject
 class GenerateFragment : Fragment() {
 
     @Inject
-    lateinit var presenter: GenerateFragmentPresenter
+    lateinit var viewModel: GenerateViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -27,7 +27,7 @@ class GenerateFragment : Fragment() {
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         val binding = FragmentGenerateBinding.inflate(inflater, container, false)
-        binding.presenter = presenter
+        binding.viewModel = viewModel
         return binding.root
     }
 }
