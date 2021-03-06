@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import jibreelpowell.com.softwords.generate.generator.Pattern
 import jibreelpowell.com.softwords.storage.GeneratedSentence
 import jibreelpowell.com.softwords.storage.SentenceDao
+import jibreelpowell.com.softwords.utils.scheduleCompletableInBackground
+import timber.log.Timber
 import javax.inject.Inject
 
 class GenerateViewModel @Inject constructor(private val sentenceDao: SentenceDao) :
@@ -27,21 +29,21 @@ class GenerateViewModel @Inject constructor(private val sentenceDao: SentenceDao
     }
 
     fun storeCurrentSentence() {
-//        sentence.value?.let {
-//            val generatedSentence = GeneratedSentence.newInstance(it)
-//            sentenceDao.insertAll(generatedSentence)
-//                .scheduleCompletableInBackground()
-//                .subscribeWith(object : DisposableCompletableObserver() {
-//                    override fun onComplete() {
-//                        storageResult.value = Result.success(generatedSentence)
-//                    }
-//
-//                    override fun onError(e: Throwable) {
-//                        Timber.e(e)
-//                        storageResult.value = Result.failure(e)
-//                    }
-//                })
-//        }
+        sentence.value?.let {
+            val generatedSentence = GeneratedSentence.newInstance(it)
+            sentenceDao.insertAll(generatedSentence)
+                .scheduleCompletableInBackground()
+                .subscribe(
+                    {
+                        Timber.d("Sentence inserted into database successfully")
+                        storageResult.value = Result.success(generatedSentence)
+                    },
+                    { e ->
+                        Timber.e(e)
+                        storageResult.value = Result.failure(e)
+                    }
+                )
+        }
     }
 
 }

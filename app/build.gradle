@@ -76,7 +76,7 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.32'
 
     //Jetpack Compose Integration (Navigation)
-    implementation "androidx.navigation:navigation-compose:1.0.0-alpha07"
+    implementation "androidx.navigation:navigation-compose:1.0.0-alpha08"
 
     //ThreeTen for Java 8 Time
     implementation 'com.jakewharton.threetenabp:threetenabp:1.3.0'
