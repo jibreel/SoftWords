@@ -6,13 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import jibreelpowell.com.softwords.databinding.FragmentHistoryBinding
 import jibreelpowell.com.softwords.mainactivity.MainActivity
 import javax.inject.Inject
 
 class HistoryFragment : Fragment() {
 
-    @Inject lateinit var presenter: HistoryPresenter
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject lateinit var adapter: HistoryAdapter
+
+    private val viewModel: HistoryViewModel by viewModels {
+        viewModelFactory
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -24,7 +31,13 @@ class HistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentHistoryBinding.inflate(inflater, container, false)
-        binding.presenter = presenter
+
+        viewModel.allSentences.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
+
+        binding.viewModel = viewModel
+        binding.historyRecyclerView.adapter = adapter
         return binding.root
     }
 
