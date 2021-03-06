@@ -8,4 +8,7 @@
     <string name="history_fragment_title">Generation History</string>
     <string name="generate_store_button_text">Save This Sentence</string>
     <string name="generate_generate_button_text">New Sentence</string>
+    <string name="generate_store_snackbar_text_success">Sentence stored successfully!</string>
+    <string name="generate_store_snackbar_text_failure">Error storing sentence</string>
+    <string name="retry">Retry</string>
 </resources>

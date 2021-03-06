@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
+import jibreelpowell.com.softwords.R
 import jibreelpowell.com.softwords.databinding.FragmentGenerateBinding
 import jibreelpowell.com.softwords.mainactivity.MainActivity
 import javax.inject.Inject
@@ -28,6 +30,24 @@ class GenerateFragment : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         val binding = FragmentGenerateBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
+
+        viewModel.storageResult.observe(viewLifecycleOwner) {
+            when {
+                it.isSuccess -> {
+                    Snackbar
+                        .make(binding.root, R.string.generate_store_snackbar_text_success, Snackbar.LENGTH_SHORT)
+                        .show()
+                }
+                it.isFailure -> {
+                    Snackbar.make(binding.root, R.string.generate_store_snackbar_text_failure, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.retry) {
+                            viewModel.storeCurrentSentence()
+                        }
+                        .show()
+                }
+            }
+        }
+
         return binding.root
     }
 }
