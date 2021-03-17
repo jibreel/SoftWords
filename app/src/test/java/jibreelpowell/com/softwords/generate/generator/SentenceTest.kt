@@ -8,7 +8,7 @@ class SentenceTest {
     @Test
     fun testGet() {
         val sentence = Sentence(Noun("tree"))
-        assertEquals(sentence[0].asString(), "tree")
+        assertEquals(sentence[0].toString(), "tree")
     }
 
     @Test
@@ -36,7 +36,7 @@ class SentenceTest {
             Verb("rise")
         )
         assertEquals(
-            "galaxies rise", sentence.toString()
+            "galaxies rise.", sentence.toString()
         )
     }
 }

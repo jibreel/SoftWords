@@ -1,6 +1,7 @@
 package jibreelpowell.com.softwords.generate.generator
 
-import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.*
+import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.PLURAL
+import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.SINGULAR
 import jibreelpowell.com.softwords.generate.generator.GrammaticalPerson.*
 
 class Verb(
@@ -23,7 +24,7 @@ class Verb(
     constructor(base: String) :
         this(i = base, we = base, you = base, it = base + 's', they = base)
 
-    override fun asString() =
+    override fun toString() =
         when (person) {
             SECOND -> secondPerson
             FIRST ->

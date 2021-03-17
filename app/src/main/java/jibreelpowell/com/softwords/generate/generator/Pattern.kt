@@ -72,7 +72,7 @@ enum class Pattern {
     fun sentence(vararg words: Word): String {
         var sentence = ""
         for ((index, word) in words.withIndex()) {
-            sentence += word.asString()
+            sentence += word.toString()
             if (words.lastIndex != index) {
                 sentence += " "
             }

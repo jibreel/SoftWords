@@ -12,7 +12,7 @@ data class Noun(
 
     constructor(singular: String) : this(singular, singular + 's')
 
-    override fun asString() =
+    override fun toString() =
             when (number) {
                 SINGULAR -> singular
                 PLURAL -> plural

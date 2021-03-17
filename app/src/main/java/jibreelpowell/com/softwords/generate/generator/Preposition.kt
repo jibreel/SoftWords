@@ -3,7 +3,7 @@ package jibreelpowell.com.softwords.generate.generator
 class Preposition(name: String): Word() {
     val name: String = name.toLowerCase()
 
-    override fun asString() = name
+    override fun toString() = name
 
     companion object {
         private val prepositions = listOf(

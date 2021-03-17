@@ -7,31 +7,8 @@ import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.PLURAL
 import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.SINGULAR
 
 data class Article(val article: String, val type: ArticleType, val number: GrammaticalNumber): Word() {
-    private val THE = "the"
-    private val A = "a"
-    private val AN = "an"
-    private val EMPTY = ""
 
-    private var beforeVowel = false
-
-    fun precedes(word: Word) {
-        beforeVowel = word.asString()[0].isVowel()
-    }
-
-    override fun asString(): String =
-            when (type) {
-                INDEFINITE ->
-                    when (number) {
-                        SINGULAR ->
-                            if (beforeVowel) {
-                                AN
-                            } else {
-                                A
-                            }
-                        PLURAL -> EMPTY
-                    }
-                DEFINITE -> THE
-            }
+    override fun toString(): String = article
 
     private enum class Articles(val article: Article) {
         THE_SINGULAR(Article("the", DEFINITE, SINGULAR)),

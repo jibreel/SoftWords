@@ -35,7 +35,5 @@ enum class ArticleType {
 }
 
 abstract class Word {
-    abstract fun asString(): String
-    override fun toString() = asString()
-
+    abstract override fun toString(): String
 }

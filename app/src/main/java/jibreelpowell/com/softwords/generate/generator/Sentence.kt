@@ -17,7 +17,6 @@ class Sentence(wordsList: List<Word>) {
             ) { acc, word ->
                 "$acc$word "
             }
-        string.trim()
-        return "$string."
+        return "${string.trim()}."
     }
 }
