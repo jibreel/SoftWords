@@ -1,10 +1,12 @@
 package jibreelpowell.com.softwords.generate.generator
 
-import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.*
+import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.PLURAL
+import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.SINGULAR
 
-class Noun(singular: String, plural: String): Word() {
-    val singular: String = singular.toLowerCase()
-    val plural: String = plural.toLowerCase()
+data class Noun(
+    val singular: String,
+    val plural: String
+): Word() {
 
     var number: GrammaticalNumber = SINGULAR
 
@@ -16,13 +18,15 @@ class Noun(singular: String, plural: String): Word() {
                 PLURAL -> plural
             }
 
-    fun article(articleType: ArticleType): Article {
-        val article = Article()
-        article.type = articleType
-        article.number = number
-        article.precedes(this)
-        return article
-    }
+    fun article(articleType: ArticleType): Article = Article.forNoun(this, articleType)
+
+    val startsWithVowel: Boolean
+        get() {
+            return when (number) {
+                SINGULAR -> singular[0].isVowel()
+                PLURAL -> plural[0].isVowel()
+            }
+        }
 
     companion object NounLibrary {
 

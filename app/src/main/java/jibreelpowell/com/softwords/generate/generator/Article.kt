@@ -1,13 +1,17 @@
 package jibreelpowell.com.softwords.generate.generator
 
-class Article: Word() {
+import jibreelpowell.com.softwords.generate.generator.Article.Articles.*
+import jibreelpowell.com.softwords.generate.generator.ArticleType.DEFINITE
+import jibreelpowell.com.softwords.generate.generator.ArticleType.INDEFINITE
+import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.PLURAL
+import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.SINGULAR
+
+data class Article(val article: String, val type: ArticleType, val number: GrammaticalNumber): Word() {
     private val THE = "the"
     private val A = "a"
     private val AN = "an"
     private val EMPTY = ""
 
-    var type: ArticleType = ArticleType.DEFINITE
-    var number: GrammaticalNumber = GrammaticalNumber.SINGULAR
     private var beforeVowel = false
 
     fun precedes(word: Word) {
@@ -16,16 +20,37 @@ class Article: Word() {
 
     override fun asString(): String =
             when (type) {
-                ArticleType.INDEFINITE ->
+                INDEFINITE ->
                     when (number) {
-                        GrammaticalNumber.SINGULAR ->
+                        SINGULAR ->
                             if (beforeVowel) {
                                 AN
                             } else {
                                 A
                             }
-                        GrammaticalNumber.PLURAL -> EMPTY
+                        PLURAL -> EMPTY
                     }
-                ArticleType.DEFINITE -> THE
+                DEFINITE -> THE
             }
+
+    private enum class Articles(val article: Article) {
+        THE_SINGULAR(Article("the", DEFINITE, SINGULAR)),
+        THE_PLURAL(Article("the", DEFINITE, PLURAL)),
+        A(Article("a", INDEFINITE, SINGULAR)),
+        AN(Article("an", INDEFINITE, SINGULAR)),
+        EMPTY(Article("", INDEFINITE, SINGULAR))
+    }
+
+    companion object {
+        fun forNoun(noun: Noun, type: ArticleType): Article {
+            val number = noun.number
+            return when {
+                type == INDEFINITE && number == SINGULAR -> if (noun.startsWithVowel) A.article else AN.article
+                type == INDEFINITE && number == PLURAL -> EMPTY.article
+                type == DEFINITE && number == SINGULAR -> THE_SINGULAR.article
+                type == DEFINITE && number == PLURAL -> THE_PLURAL.article
+                else -> throw IllegalStateException("Impossible combination of ArticleType and GrammaticalNumber")
+            }
+        }
+    }
 }

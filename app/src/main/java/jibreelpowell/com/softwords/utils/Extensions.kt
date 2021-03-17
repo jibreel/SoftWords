@@ -26,3 +26,7 @@ fun Completable.scheduleCompletableInBackground(): Completable {
         .observeOn(AndroidSchedulers.mainThread())
 }
 
+fun Char.isVowel(): Boolean {
+    return "aeiou".contains(this, ignoreCase = true)
+}
+
