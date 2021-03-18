@@ -1,7 +1,10 @@
 package jibreelpowell.com.softwords.generate
 
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.reactivex.rxjava3.kotlin.subscribeBy
+import jibreelpowell.com.softwords.generate.generator.Generator
 import jibreelpowell.com.softwords.generate.generator.Pattern
 import jibreelpowell.com.softwords.storage.GeneratedSentence
 import jibreelpowell.com.softwords.storage.SentenceDao
@@ -9,8 +12,13 @@ import jibreelpowell.com.softwords.utils.scheduleCompletableInBackground
 import timber.log.Timber
 import javax.inject.Inject
 
-class GenerateViewModel @Inject constructor(private val sentenceDao: SentenceDao) :
+class GenerateViewModel @Inject constructor(
+    private val sentenceDao: SentenceDao,
+    private val generator: Generator
+) :
     ViewModel() {
+
+    val isLoading = ObservableBoolean()
 
     val sentence: MutableLiveData<String> by lazy {
         MutableLiveData()
@@ -20,12 +28,27 @@ class GenerateViewModel @Inject constructor(private val sentenceDao: SentenceDao
         MutableLiveData()
     }
 
+    val generateResult: MutableLiveData<Result<GeneratedSentence>> by lazy {
+        MutableLiveData()
+    }
+
     init {
         generateNewSentence()
     }
 
     fun generateNewSentence() {
-        sentence.value = Pattern.random().sentence()
+        isLoading.set(true)
+        generator.generateRandomSentence(Pattern.random()).subscribeBy(
+            onSuccess = {
+                val generatedSentence = GeneratedSentence.newInstance(it.toString())
+                sentence.value = generatedSentence.sentence
+                generateResult.value = Result.success(generatedSentence)
+            },
+            onError = {
+                Timber.e(it)
+                generateResult.value = Result.failure(it)
+            }
+        )
     }
 
     fun storeCurrentSentence() {

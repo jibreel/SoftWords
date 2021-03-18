@@ -11,4 +11,6 @@
     <string name="generate_store_snackbar_text_success">Sentence stored successfully!</string>
     <string name="generate_store_snackbar_text_failure">Error storing sentence</string>
     <string name="retry">Retry</string>
+    <string name="generate_sentence_error">Something went wrong generating a new sentence!</string>
+    <string name="cancel">Cancel</string>
 </resources>

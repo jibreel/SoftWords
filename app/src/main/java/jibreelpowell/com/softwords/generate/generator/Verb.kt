@@ -26,6 +26,11 @@ data class Verb(
             thirdPersonPlural = base
         )
 
+    override val partOfSpeech: PartOfSpeech
+        get() {
+            return PartOfSpeech.VERB
+        }
+
     override fun toString() =
         when (person) {
             SECOND -> secondPerson
@@ -40,5 +45,15 @@ data class Verb(
                     PLURAL -> thirdPersonPlural
                 }
         }
+
+    fun withNumber(number: GrammaticalNumber): Verb {
+        this.number = number
+        return this
+    }
+
+    fun withPerson(person: GrammaticalPerson): Verb {
+        this.person = person
+        return this
+    }
 }
 

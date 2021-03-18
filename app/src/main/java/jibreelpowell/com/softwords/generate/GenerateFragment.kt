@@ -1,5 +1,6 @@
 package jibreelpowell.com.softwords.generate
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -44,6 +45,21 @@ class GenerateFragment : Fragment() {
                             viewModel.storeCurrentSentence()
                         }
                         .show()
+                }
+            }
+        }
+
+        viewModel.generateResult.observe(viewLifecycleOwner) {
+            when {
+                it.isFailure -> {
+                    AlertDialog.Builder(context)
+                        .setMessage(R.string.generate_sentence_error)
+                        .setPositiveButton(R.string.retry) { adb, _ ->
+                            adb.dismiss()
+                            viewModel.generateNewSentence() }
+                        .setNegativeButton(R.string.cancel) { adb, _ ->
+                            adb.cancel()
+                        }
                 }
             }
         }

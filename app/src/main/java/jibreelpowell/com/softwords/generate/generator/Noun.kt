@@ -10,19 +10,17 @@ import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.SINGULAR
 data class Noun(
     @PrimaryKey val singular: String,
     val plural: String
-): Word() {
+) : Word() {
 
-    @Ignore var number: GrammaticalNumber = SINGULAR
+    @Ignore
+    var number: GrammaticalNumber = SINGULAR
 
     constructor(singular: String) : this(singular, singular + 's')
 
-    override fun toString() =
-            when (number) {
-                SINGULAR -> singular
-                PLURAL -> plural
-            }
-
-    fun article(articleType: ArticleType): Article = Article.forNoun(this, articleType)
+    override val partOfSpeech: PartOfSpeech
+        get() {
+            return PartOfSpeech.NOUN
+        }
 
     val startsWithVowel: Boolean
         get() {
@@ -31,5 +29,21 @@ data class Noun(
                 PLURAL -> plural[0].isVowel()
             }
         }
+
+    override fun toString() =
+        when (number) {
+            SINGULAR -> singular
+            PLURAL -> plural
+        }
+
+    fun article(articleType: ArticleType? = null): Article =
+        Article.forNoun(this, articleType ?: ArticleType.random())
+
+    fun withNumber(grammaticalNumber: GrammaticalNumber): Noun {
+        number = grammaticalNumber
+        return this
+    }
+
+
 }
 

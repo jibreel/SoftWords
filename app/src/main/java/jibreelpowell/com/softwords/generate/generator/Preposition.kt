@@ -7,4 +7,8 @@ import androidx.room.PrimaryKey
 data class Preposition(@PrimaryKey val name: String): Word() {
 
     override fun toString() = name
+    override val partOfSpeech: PartOfSpeech
+        get() {
+            return PartOfSpeech.PREPOSITION
+        }
 }

@@ -9,6 +9,10 @@ import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.SINGULAR
 data class Article(val article: String, val type: ArticleType, val number: GrammaticalNumber): Word() {
 
     override fun toString(): String = article
+    override val partOfSpeech: PartOfSpeech
+        get() {
+            return PartOfSpeech.ARTICLE
+        }
 
     private enum class Articles(val article: Article) {
         THE_SINGULAR(Article("the", DEFINITE, SINGULAR)),
