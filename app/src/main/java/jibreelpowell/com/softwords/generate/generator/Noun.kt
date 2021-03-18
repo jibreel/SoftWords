@@ -1,14 +1,18 @@
 package jibreelpowell.com.softwords.generate.generator
 
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.PLURAL
 import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.SINGULAR
 
+@Entity(tableName = "nouns")
 data class Noun(
-    val singular: String,
+    @PrimaryKey val singular: String,
     val plural: String
 ): Word() {
 
-    var number: GrammaticalNumber = SINGULAR
+    @Ignore var number: GrammaticalNumber = SINGULAR
 
     constructor(singular: String) : this(singular, singular + 's')
 
@@ -27,23 +31,5 @@ data class Noun(
                 PLURAL -> plural[0].isVowel()
             }
         }
-
-    companion object NounLibrary {
-
-        val nouns: List<Noun> = listOf(
-                Noun("leaf", "leaves"),
-                Noun("water"),
-                Noun("rock"),
-                Noun("card"),
-                Noun("fish", "fish"),
-                Noun("person", "people"),
-                Noun("bug"),
-                Noun("galaxy", "galaxies"),
-                Noun("napkin"),
-                Noun("word")
-        )
-
-        fun random() = nouns.random()
-    }
 }
 
