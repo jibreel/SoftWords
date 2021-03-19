@@ -1,6 +1,5 @@
 package jibreelpowell.com.softwords.generate.generator
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import jibreelpowell.com.softwords.generate.generator.GrammaticalPerson.THIRD
@@ -36,7 +35,8 @@ class Generator @Inject constructor(private val repository: WordRepository) {
             }).subscribeOn(Schedulers.io())
 
         return Single.zip(nounSingle, verbSingle, prepSingle) { nouns, verbs, preps ->
-            Packet(nouns, verbs, preps)
+            val packet = Packet(nouns, verbs, preps)
+            packet
         }.map { (nouns, verbs, preps) ->
             return@map when (pattern) {
                 Pattern.NounVerb -> {
@@ -67,7 +67,7 @@ class Generator @Inject constructor(private val repository: WordRepository) {
                     Sentence(article1, noun1, verb, article2, noun2)
                 }
             }
-        }.observeOn(AndroidSchedulers.mainThread())
+        }
     }
 
     private data class Packet(

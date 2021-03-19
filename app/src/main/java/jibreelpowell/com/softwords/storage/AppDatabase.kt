@@ -16,7 +16,7 @@ import jibreelpowell.com.softwords.utils.Converters
 import jibreelpowell.com.softwords.utils.DATABASE_NAME
 import timber.log.Timber
 
-@Database(entities = [GeneratedSentence::class, Noun::class], version = 1)
+@Database(entities = [GeneratedSentence::class, Noun::class, Verb::class, Preposition::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun sentencesDao(): SentenceDao
@@ -33,29 +33,34 @@ abstract class AppDatabase : RoomDatabase() {
                 INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
             }
 
-        private fun buildDatabase(context: Context): AppDatabase =
-            Room.databaseBuilder(
+        private fun buildDatabase(context: Context): AppDatabase {
+            return Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java,
                 DATABASE_NAME
             ).addCallback(
-                object : Callback() {
+                object : RoomDatabase.Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
                         val instance = getInstance(context)
-                        val completable1 = instance.nounDao().insertAll(initialNouns).subscribeOn(Schedulers.io())
-                        val completable2 = instance.verbDao().insertAll(initialVerbs).subscribeOn(Schedulers.io())
-                        val completable3 = instance.prepositionDao().insertAll(initialPrepositions).subscribeOn(Schedulers.io())
+                        val completable1 =
+                            instance.nounDao().insertAll(initialNouns).subscribeOn(Schedulers.io())
+                        val completable2 =
+                            instance.verbDao().insertAll(initialVerbs).subscribeOn(Schedulers.io())
+                        val completable3 = instance.prepositionDao().insertAll(initialPrepositions)
+                            .subscribeOn(Schedulers.io())
 
                         completable1.mergeWith(completable2).mergeWith(completable3)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribeBy(
-                                onComplete = { Timber.v("Table Populated")},
-                                onError = { t -> Timber.e(t)}
+                                onComplete = { Timber.v("Table Populated") },
+                                onError = { t -> Timber.e(t) }
                             )
+
                     }
                 }
             ).build()
+        }
 
         private val initialNouns = listOf(
             Noun("leaf", "leaves"),

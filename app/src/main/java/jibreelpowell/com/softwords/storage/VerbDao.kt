@@ -9,7 +9,7 @@ import jibreelpowell.com.softwords.generate.generator.Verb
 
 @Dao
 interface VerbDao {
-    @Query("SELECT * FROM nouns ORDER BY RANDOM() LIMIT :number")
+    @Query("SELECT * FROM verbs ORDER BY RANDOM() LIMIT :number")
     fun loadRandom(number: Int): Single<List<Verb>>
 
     @Insert

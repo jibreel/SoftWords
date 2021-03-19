@@ -31,6 +31,7 @@ class GenerateFragment : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         val binding = FragmentGenerateBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.storageResult.observe(viewLifecycleOwner) {
             when {

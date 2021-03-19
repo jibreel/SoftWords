@@ -1,17 +1,18 @@
 package jibreelpowell.com.softwords.generate.generator
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.PLURAL
 import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.SINGULAR
 import jibreelpowell.com.softwords.generate.generator.GrammaticalPerson.*
 
 @Entity(tableName = "verbs")
 data class Verb(
-        val firstPersonSingular: String,
-        val firstPersonPlural: String,
-        val secondPerson: String,
-        val thirdPersonSingular: String,
-        val thirdPersonPlural: String
+    @PrimaryKey val firstPersonSingular: String,
+    val firstPersonPlural: String,
+    val secondPerson: String,
+    val thirdPersonSingular: String,
+    val thirdPersonPlural: String
 ): Word() {
 
     var number: GrammaticalNumber = SINGULAR

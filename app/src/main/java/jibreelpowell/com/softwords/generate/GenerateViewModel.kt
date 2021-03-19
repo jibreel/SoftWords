@@ -3,6 +3,7 @@ package jibreelpowell.com.softwords.generate
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import jibreelpowell.com.softwords.generate.generator.Generator
 import jibreelpowell.com.softwords.generate.generator.Pattern
@@ -38,7 +39,9 @@ class GenerateViewModel @Inject constructor(
 
     fun generateNewSentence() {
         isLoading.set(true)
-        generator.generateRandomSentence(Pattern.random()).subscribeBy(
+        generator.generateRandomSentence(Pattern.random())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
             onSuccess = {
                 val generatedSentence = GeneratedSentence.newInstance(it.toString())
                 sentence.value = generatedSentence.sentence
