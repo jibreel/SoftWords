@@ -26,7 +26,7 @@ data class Article(val article: String, val type: ArticleType, val number: Gramm
         fun forNoun(noun: Noun, type: ArticleType): Article {
             val number = noun.number
             return when {
-                type == INDEFINITE && number == SINGULAR -> if (noun.startsWithVowel) A.article else AN.article
+                type == INDEFINITE && number == SINGULAR -> if (noun.startsWithVowel) AN.article else A.article
                 type == INDEFINITE && number == PLURAL -> EMPTY.article
                 type == DEFINITE && number == SINGULAR -> THE_SINGULAR.article
                 type == DEFINITE && number == PLURAL -> THE_PLURAL.article

@@ -1,6 +1,6 @@
 package jibreelpowell.com.softwords.generate.generator
 
-import java.util.*
+import java.util.Random
 
 /**
  * Created by jibreel on 9/17/17.
@@ -18,9 +18,3 @@ fun ClosedRange<Int>.random() : Int {
 fun <T> Array<T>.random() = this[(0..lastIndex).random()]
 
 fun <T> List<T>.random() = this[(0..lastIndex).random()]
-
-fun Char.isVowel() =
-        when (this.toLowerCase()) {
-            'a', 'e', 'i', 'o', 'u' -> true
-            else -> false
-        }

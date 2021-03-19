@@ -5,6 +5,7 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.PLURAL
 import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.SINGULAR
+import jibreelpowell.com.softwords.utils.isVowel
 
 @Entity(tableName = "nouns")
 data class Noun(

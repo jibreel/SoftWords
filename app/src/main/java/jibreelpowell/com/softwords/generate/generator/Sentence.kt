@@ -15,7 +15,11 @@ class Sentence(wordsList: List<Word>) {
         val string =  words.fold(
                ""
             ) { acc, word ->
-                "$acc$word "
+                if (word.toString() != "") {
+                    "$acc$word "
+                } else {
+                    acc
+                }
             }
         return "${string.trim()}."
     }
