@@ -15,6 +15,7 @@ import jibreelpowell.com.softwords.databinding.ActivityMainBinding
 import jibreelpowell.com.softwords.generate.GenerateComponent
 import jibreelpowell.com.softwords.generate.GenerateFragment
 import jibreelpowell.com.softwords.history.HistoryFragment
+import jibreelpowell.com.softwords.settings.SettingsFragment
 import jibreelpowell.com.softwords.utils.app
 
 class MainActivity : AppCompatActivity() {
@@ -38,7 +39,14 @@ class MainActivity : AppCompatActivity() {
                         setReorderingAllowed(true)
                         addToBackStack(null)
                     }
-
+                    true
+                }
+                R.id.navigation_settings -> {
+                    supportFragmentManager.commit {
+                        replace<SettingsFragment>(R.id.main_nav_host_fragment)
+                        setReorderingAllowed(true)
+                        addToBackStack(null)
+                    }
                     true
                 }
                 else -> false
@@ -58,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_history, R.id.navigation_generate
+                R.id.navigation_history, R.id.navigation_generate, R.id.navigation_settings
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

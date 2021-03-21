@@ -16,8 +16,7 @@ import javax.inject.Inject
 class GenerateViewModel @Inject constructor(
     private val sentenceDao: SentenceDao,
     private val generator: Generator
-) :
-    ViewModel() {
+) : ViewModel() {
 
     val isLoading = ObservableBoolean()
 

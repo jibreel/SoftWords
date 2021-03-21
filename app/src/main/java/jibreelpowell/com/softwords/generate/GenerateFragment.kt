@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import jibreelpowell.com.softwords.R
 import jibreelpowell.com.softwords.databinding.FragmentGenerateBinding
@@ -16,7 +18,11 @@ import javax.inject.Inject
 class GenerateFragment : Fragment() {
 
     @Inject
-    lateinit var viewModel: GenerateViewModel
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: GenerateViewModel by viewModels {
+        viewModelFactory
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -67,4 +73,5 @@ class GenerateFragment : Fragment() {
 
         return binding.root
     }
+
 }
