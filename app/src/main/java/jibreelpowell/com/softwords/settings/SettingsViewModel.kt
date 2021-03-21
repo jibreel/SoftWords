@@ -6,6 +6,7 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import jibreelpowell.com.softwords.generate.generator.Word
 import jibreelpowell.com.softwords.storage.WordRepository
 import jibreelpowell.com.softwords.utils.scheduleCompletableInBackground
+import timber.log.Timber
 import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(
@@ -27,6 +28,7 @@ class SettingsViewModel @Inject constructor(
                     storageResult.value = Result.success(Word.PartOfSpeech.NOUN)
                 },
                 onError = {
+                    Timber.e(it)
                     storageResult.value = Result.failure(it)
                 }
             )

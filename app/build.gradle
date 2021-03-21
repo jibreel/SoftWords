@@ -23,7 +23,7 @@ android {
         debug {
             def localProperties = new Properties()
             localProperties.load(new FileInputStream(rootProject.file("local.properties")))
-            buildConfigField("String", "RAPID_API_KEY", '"' + localProperties['wordnikApiKey'] + '"')
+            buildConfigField("String", "RAPID_API_KEY", '"' + localProperties['rapidApiKey'] + '"')
         }
         release {
             minifyEnabled false

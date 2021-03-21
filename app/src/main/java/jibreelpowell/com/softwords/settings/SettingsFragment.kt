@@ -13,6 +13,7 @@ import jibreelpowell.com.softwords.R
 import jibreelpowell.com.softwords.databinding.FragmentSettingsBinding
 import jibreelpowell.com.softwords.generate.generator.Word
 import jibreelpowell.com.softwords.mainactivity.MainActivity
+import java.util.Locale
 import javax.inject.Inject
 
 class SettingsFragment : Fragment() {
@@ -41,12 +42,12 @@ class SettingsFragment : Fragment() {
         viewModel.storageResult.observe(viewLifecycleOwner) {
             when {
                 it.isSuccess -> {
-                    val pos = it.getOrNull()?.name?.toLowerCase() ?: "word"
+                    val pos = it.getOrNull()?.name?.toLowerCase(Locale.getDefault()) ?: "word"
                     Snackbar.make(
                         binding.root,
                         getString(R.string.added_new_word, pos),
                         Snackbar.LENGTH_SHORT
-                    )
+                    ).show()
                 }
                 it.isFailure -> {
                     val lastRequested = viewModel.lastRequestedAddition
