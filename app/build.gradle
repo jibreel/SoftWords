@@ -15,19 +15,20 @@ android {
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
         //Common Build Config Fields
-        buildConfigField("String", "WORDNIK_URL", '"api.wordnik.com"')
+        buildConfigField("String", "WORDS_API", '"https://wordsapiv1.p.rapidapi.com"')
+        buildConfigField("String", "LINGUA_ROBOT_API", "https://lingua-robot.p.rapidapi.com")
     }
 
     buildTypes {
         debug {
             def localProperties = new Properties()
             localProperties.load(new FileInputStream(rootProject.file("local.properties")))
-            buildConfigField("String", "WORDNIK_API_KEY", '"' + localProperties['wordnikApiKey'] + '"')
+            buildConfigField("String", "RAPID_API_KEY", '"' + localProperties['wordnikApiKey'] + '"')
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "WORDNIK_API_KEY", '"API KEY YET NOT SET FOR RELEASE VARIANTS"')
+            buildConfigField("String", "RAPID_API_KEY", '"API KEY YET NOT SET FOR RELEASE VARIANTS"')
         }
     }
     buildFeatures {
