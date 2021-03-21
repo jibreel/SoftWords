@@ -7,7 +7,7 @@ import jibreelpowell.com.softwords.generate.GenerateComponent
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [StorageModule::class, ViewModelModule::class, AppSubcomponents::class])
+@Component(modules = [StorageModule::class, NetworkModule::class, ViewModelModule::class, AppSubcomponents::class])
 interface AppComponent {
 
     @Component.Factory

@@ -16,7 +16,7 @@ android {
 
         //Common Build Config Fields
         buildConfigField("String", "WORDS_API", '"https://wordsapiv1.p.rapidapi.com"')
-        buildConfigField("String", "LINGUA_ROBOT_API", "https://lingua-robot.p.rapidapi.com")
+        buildConfigField("String", "LINGUA_ROBOT_API", '"https://lingua-robot.p.rapidapi.com"')
     }
 
     buildTypes {

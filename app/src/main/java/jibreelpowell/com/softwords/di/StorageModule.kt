@@ -35,7 +35,7 @@ class StorageModule {
     }
 
     @Provides
-    fun providePreposition(appDatabase: AppDatabase): PrepositionDao {
+    fun providePrepositionDao(appDatabase: AppDatabase): PrepositionDao {
         return appDatabase.prepositionDao()
     }
 
