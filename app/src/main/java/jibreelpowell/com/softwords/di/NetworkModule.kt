@@ -2,6 +2,7 @@ package jibreelpowell.com.softwords.di
 
 import dagger.Module
 import dagger.Provides
+import okhttp3.Interceptor
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -10,11 +11,14 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttp
+    fun provideOkHttpForWordnikApi() {
+
+        val interceptor = Interceptor()
+    }
 
     @Singleton
     @Provides
-    fun provideRetrofitForDictionaryApi(): Retrofit {
+    fun provideRetrofitForWordnikApi(): Retrofit {
         return Retrofit.Builder()
             .baseUrl()
     }

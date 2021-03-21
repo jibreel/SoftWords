@@ -15,7 +15,7 @@ android {
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
         //Common Build Config Fields
-        buildConfigString("String", "WORDNIK_URL", '"api.wordnik.com"')
+        buildConfigField("String", "WORDNIK_URL", '"api.wordnik.com"')
     }
 
     buildTypes {
