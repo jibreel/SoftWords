@@ -6,14 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.kotlin.subscribeBy
-import io.reactivex.rxjava3.schedulers.Schedulers
 import jibreelpowell.com.softwords.generate.generator.Noun
 import jibreelpowell.com.softwords.generate.generator.Preposition
 import jibreelpowell.com.softwords.generate.generator.Verb
 import jibreelpowell.com.softwords.utils.Converters
 import jibreelpowell.com.softwords.utils.DATABASE_NAME
+import jibreelpowell.com.softwords.utils.SchedulerProvider
+import jibreelpowell.com.softwords.utils.scheduleSingleInBackground
 import timber.log.Timber
 
 @Database(entities = [GeneratedSentence::class, Noun::class, Verb::class, Preposition::class], version = 1)
@@ -24,16 +24,25 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun verbDao(): VerbDao
     abstract fun prepositionDao(): PrepositionDao
 
+    fun checkInitialization(schedulerProvider: SchedulerProvider) {
+        nounDao().loadRandom(1)
+            .scheduleSingleInBackground(schedulerProvider)
+            .subscribeBy(
+                onSuccess = { Timber.v("Database Initialized")},
+                onError = { Timber.e(it) }
+            )
+    }
+
     companion object {
 
         @Volatile private var INSTANCE: AppDatabase? = null
 
-        fun getInstance(context: Context): AppDatabase =
+        fun getInstance(context: Context, schedulerProvider: SchedulerProvider): AppDatabase =
             INSTANCE ?: synchronized(this)  {
-                INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
+                INSTANCE ?: buildDatabase(context, schedulerProvider).also { INSTANCE = it }
             }
 
-        private fun buildDatabase(context: Context): AppDatabase {
+        private fun buildDatabase(context: Context, schedulerProvider: SchedulerProvider): AppDatabase {
             return Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java,
@@ -42,16 +51,16 @@ abstract class AppDatabase : RoomDatabase() {
                 object : RoomDatabase.Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
-                        val instance = getInstance(context)
+                        val instance = getInstance(context, schedulerProvider)
                         val completable1 =
-                            instance.nounDao().insertAll(initialNouns).subscribeOn(Schedulers.io())
+                            instance.nounDao().insertAll(initialNouns).subscribeOn(schedulerProvider.io)
                         val completable2 =
-                            instance.verbDao().insertAll(initialVerbs).subscribeOn(Schedulers.io())
+                            instance.verbDao().insertAll(initialVerbs).subscribeOn(schedulerProvider.io)
                         val completable3 = instance.prepositionDao().insertAll(initialPrepositions)
-                            .subscribeOn(Schedulers.io())
+                            .subscribeOn(schedulerProvider.io)
 
                         completable1.mergeWith(completable2).mergeWith(completable3)
-                            .observeOn(AndroidSchedulers.mainThread())
+                            .observeOn(schedulerProvider.ui)
                             .subscribeBy(
                                 onComplete = { Timber.v("Table Populated") },
                                 onError = { t -> Timber.e(t) }

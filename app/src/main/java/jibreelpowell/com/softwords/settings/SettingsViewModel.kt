@@ -5,12 +5,14 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import jibreelpowell.com.softwords.generate.generator.Word
 import jibreelpowell.com.softwords.storage.WordRepository
+import jibreelpowell.com.softwords.utils.SchedulerProvider
 import jibreelpowell.com.softwords.utils.scheduleCompletableInBackground
 import timber.log.Timber
 import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(
-    private val wordRepository: WordRepository
+    private val wordRepository: WordRepository,
+    private val schedulerProvider: SchedulerProvider
 ) : ViewModel() {
 
     val storageResult: MutableLiveData<Result<Word.PartOfSpeech>> by lazy {
@@ -22,7 +24,7 @@ class SettingsViewModel @Inject constructor(
     fun addNewNoun() {
         lastRequestedAddition = Word.PartOfSpeech.NOUN
         wordRepository.addNewNounToStorage()
-            .scheduleCompletableInBackground()
+            .scheduleCompletableInBackground(schedulerProvider)
             .subscribeBy(
                 onComplete = {
                     storageResult.value = Result.success(Word.PartOfSpeech.NOUN)
@@ -37,7 +39,7 @@ class SettingsViewModel @Inject constructor(
     fun addNewVerb() {
         lastRequestedAddition = Word.PartOfSpeech.VERB
         wordRepository.addNewVerbToStorage()
-            .scheduleCompletableInBackground()
+            .scheduleCompletableInBackground(schedulerProvider)
             .subscribeBy(
                 onComplete = {
                     storageResult.value = Result.success(Word.PartOfSpeech.VERB)
@@ -51,7 +53,7 @@ class SettingsViewModel @Inject constructor(
     fun addNewPreposition() {
         lastRequestedAddition = Word.PartOfSpeech.PREPOSITION
         wordRepository.addNewPrepositionToStorage()
-            .scheduleCompletableInBackground()
+            .scheduleCompletableInBackground(schedulerProvider)
             .subscribeBy(
                 onComplete = {
                     storageResult.value = Result.success(Word.PartOfSpeech.PREPOSITION)

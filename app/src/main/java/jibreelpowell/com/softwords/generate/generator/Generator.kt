@@ -1,12 +1,15 @@
 package jibreelpowell.com.softwords.generate.generator
 
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
 import jibreelpowell.com.softwords.generate.generator.GrammaticalPerson.THIRD
 import jibreelpowell.com.softwords.storage.WordRepository
+import jibreelpowell.com.softwords.utils.SchedulerProvider
 import javax.inject.Inject
 
-class Generator @Inject constructor(private val repository: WordRepository) {
+class Generator @Inject constructor(
+    private val repository: WordRepository,
+    private val schedulerProvider: SchedulerProvider
+    ) {
 
     fun generateRandomSentence(pattern: Pattern): Single<Sentence> {
         val numNouns = pattern.parts.count { it == Word.PartOfSpeech.NOUN }
@@ -18,21 +21,21 @@ class Generator @Inject constructor(private val repository: WordRepository) {
                 repository.getRandomNouns(numNouns)
             } else {
                 Single.just(arrayListOf())
-            }).subscribeOn(Schedulers.io())
+            }).subscribeOn(schedulerProvider.io)
 
         val verbSingle =
             (if (numVerbs > 0) {
                 repository.getRandomVerbs(numVerbs)
             } else {
                 Single.just(arrayListOf())
-            }).subscribeOn(Schedulers.io())
+            }).subscribeOn(schedulerProvider.io)
 
         val prepSingle =
             (if (numPreps > 0) {
                 repository.getRandomPreposition(numPreps)
             } else {
                 Single.just(arrayListOf())
-            }).subscribeOn(Schedulers.io())
+            }).subscribeOn(schedulerProvider.io)
 
         return Single.zip(nounSingle, verbSingle, prepSingle) { nouns, verbs, preps ->
             val packet = Packet(nouns, verbs, preps)

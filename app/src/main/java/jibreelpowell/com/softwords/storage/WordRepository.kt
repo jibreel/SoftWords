@@ -2,18 +2,19 @@ package jibreelpowell.com.softwords.storage
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
 import jibreelpowell.com.softwords.generate.generator.Noun
 import jibreelpowell.com.softwords.generate.generator.Preposition
 import jibreelpowell.com.softwords.generate.generator.Verb
 import jibreelpowell.com.softwords.network.linguarobot.LinguaRobotApiService
 import jibreelpowell.com.softwords.network.words.WordsApiService
+import jibreelpowell.com.softwords.utils.SchedulerProvider
 import javax.inject.Inject
 
 class WordRepository @Inject constructor(
     private val nounDao: NounDao,
     private val verbDao: VerbDao,
     private val prepositionDao: PrepositionDao,
+    private val schedulerProvider: SchedulerProvider,
     private val wordsApiService: WordsApiService,
     private val linguaRobotApiService: LinguaRobotApiService
 ) {
@@ -54,25 +55,26 @@ class WordRepository @Inject constructor(
 
     fun addNewNounToStorage(): Completable {
         return fetchNewNoun()
-            .subscribeOn(Schedulers.io())
             .concatMapCompletable {
                 nounDao.insertAll(arrayListOf(it))
             }
+            .subscribeOn(schedulerProvider.io)
     }
 
     fun addNewVerbToStorage(): Completable {
         return fetchNewVerb()
-            .subscribeOn(Schedulers.io())
             .concatMapCompletable {
                 verbDao.insertAll(arrayListOf(it))
             }
+            .subscribeOn(schedulerProvider.io)
     }
 
     fun addNewPrepositionToStorage(): Completable {
         return fetchNewPreposition()
-            .subscribeOn(Schedulers.io())
             .concatMapCompletable {
                 prepositionDao.insertAll(arrayListOf(it))
             }
+            .subscribeOn(schedulerProvider.io)
+
     }
 }

@@ -1,4 +1,4 @@
-package jibreelpowell.com.softwords.di
+package jibreelpowell.com.softwords.di.modules
 
 import android.content.Context
 import dagger.Module
@@ -8,6 +8,7 @@ import jibreelpowell.com.softwords.storage.NounDao
 import jibreelpowell.com.softwords.storage.PrepositionDao
 import jibreelpowell.com.softwords.storage.SentenceDao
 import jibreelpowell.com.softwords.storage.VerbDao
+import jibreelpowell.com.softwords.utils.SchedulerProvider
 import javax.inject.Singleton
 
 @Module
@@ -15,8 +16,8 @@ class StorageModule {
 
     @Singleton
     @Provides
-    fun provideAppDatabase(context: Context): AppDatabase {
-        return AppDatabase.getInstance(context)
+    fun provideAppDatabase(context: Context, schedulerProvider: SchedulerProvider): AppDatabase {
+        return AppDatabase.getInstance(context, schedulerProvider)
     }
 
     @Provides

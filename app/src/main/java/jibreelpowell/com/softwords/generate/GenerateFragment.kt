@@ -67,9 +67,12 @@ class GenerateFragment : Fragment() {
                         .setNegativeButton(R.string.cancel) { adb, _ ->
                             adb.cancel()
                         }
+                        .show()
                 }
             }
         }
+
+        viewModel.generateNewSentence()
 
         return binding.root
     }

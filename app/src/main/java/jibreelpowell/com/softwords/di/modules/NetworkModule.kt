@@ -1,8 +1,9 @@
-package jibreelpowell.com.softwords.di
+package jibreelpowell.com.softwords.di.modules
 
 import dagger.Module
 import dagger.Provides
 import jibreelpowell.com.softwords.BuildConfig
+import jibreelpowell.com.softwords.network.utils.RapidApiHttpInterceptor
 import jibreelpowell.com.softwords.network.linguarobot.LinguaRobotApiService
 import jibreelpowell.com.softwords.network.words.WordsApiService
 import okhttp3.OkHttpClient

@@ -1,4 +1,4 @@
-package jibreelpowell.com.softwords.di
+package jibreelpowell.com.softwords.di.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

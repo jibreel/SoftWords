@@ -1,4 +1,4 @@
-package jibreelpowell.com.softwords.di
+package jibreelpowell.com.softwords.network.utils
 
 import jibreelpowell.com.softwords.BuildConfig
 import okhttp3.Interceptor
