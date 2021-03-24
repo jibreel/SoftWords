@@ -1,45 +1,50 @@
 package jibreelpowell.com.softwords.generate.generator
 
-import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.*
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
+import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.PLURAL
+import jibreelpowell.com.softwords.generate.generator.GrammaticalNumber.SINGULAR
+import jibreelpowell.com.softwords.utils.isVowel
 
-class Noun(singular: String, plural: String): Word() {
-    val singular: String = singular.toLowerCase()
-    val plural: String = plural.toLowerCase()
+@Entity(tableName = "nouns")
+data class Noun(
+    @PrimaryKey val singular: String,
+    val plural: String
+) : Word() {
 
+    @Ignore
     var number: GrammaticalNumber = SINGULAR
 
     constructor(singular: String) : this(singular, singular + 's')
 
-    override fun asString() =
-            when (number) {
-                SINGULAR -> singular
-                PLURAL -> plural
+    override val partOfSpeech: PartOfSpeech
+        get() {
+            return PartOfSpeech.NOUN
+        }
+
+    val startsWithVowel: Boolean
+        get() {
+            return when (number) {
+                SINGULAR -> singular[0].isVowel()
+                PLURAL -> plural[0].isVowel()
             }
+        }
 
-    fun article(articleType: ArticleType): Article {
-        val article = Article()
-        article.type = articleType
-        article.number = number
-        article.precedes(this)
-        return article
+    override fun toString() =
+        when (number) {
+            SINGULAR -> singular
+            PLURAL -> plural
+        }
+
+    fun article(articleType: ArticleType? = null): Article =
+        Article.forNoun(this, articleType ?: ArticleType.random())
+
+    fun withNumber(grammaticalNumber: GrammaticalNumber): Noun {
+        number = grammaticalNumber
+        return this
     }
 
-    companion object NounLibrary {
 
-        val nouns: List<Noun> = listOf(
-                Noun("leaf", "leaves"),
-                Noun("water"),
-                Noun("rock"),
-                Noun("card"),
-                Noun("fish", "fish"),
-                Noun("person", "people"),
-                Noun("bug"),
-                Noun("galaxy", "galaxies"),
-                Noun("napkin"),
-                Noun("word")
-        )
-
-        fun random() = nouns.random()
-    }
 }
 

@@ -1,13 +1,15 @@
 package jibreelpowell.com.softwords.generate.generator
 
+import kotlin.random.Random
+
 
 enum class GrammaticalNumber {
     SINGULAR,
     PLURAL;
 
     companion object {
-        fun get(isSingular: Boolean) =
-                when (isSingular) {
+        fun random() =
+                when (Random.nextBoolean()) {
                     true -> SINGULAR
                     false -> PLURAL
                 }
@@ -26,16 +28,23 @@ enum class ArticleType {
     INDEFINITE;
 
     companion object {
-        fun get(isDefinite: Boolean) =
-        when (isDefinite) {
-            true -> DEFINITE
-            false -> INDEFINITE
+        fun random(): ArticleType {
+            return when (Random.nextBoolean()) {
+                true -> DEFINITE
+                false -> INDEFINITE
+            }
         }
     }
 }
 
 abstract class Word {
-    abstract fun asString(): String
-    override fun toString() = asString()
+    abstract override fun toString(): String
+    abstract val partOfSpeech: PartOfSpeech
 
+    enum class PartOfSpeech {
+        ARTICLE,
+        NOUN,
+        VERB,
+        PREPOSITION
+    }
 }

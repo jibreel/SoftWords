@@ -1,11 +1,14 @@
 package jibreelpowell.com.softwords.generate
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import jibreelpowell.com.softwords.R
 import jibreelpowell.com.softwords.databinding.FragmentGenerateBinding
@@ -15,7 +18,11 @@ import javax.inject.Inject
 class GenerateFragment : Fragment() {
 
     @Inject
-    lateinit var viewModel: GenerateViewModel
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: GenerateViewModel by viewModels {
+        viewModelFactory
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -30,6 +37,7 @@ class GenerateFragment : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         val binding = FragmentGenerateBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.storageResult.observe(viewLifecycleOwner) {
             when {
@@ -48,6 +56,25 @@ class GenerateFragment : Fragment() {
             }
         }
 
+        viewModel.generateResult.observe(viewLifecycleOwner) {
+            when {
+                it.isFailure -> {
+                    AlertDialog.Builder(context)
+                        .setMessage(R.string.generate_sentence_error)
+                        .setPositiveButton(R.string.retry) { adb, _ ->
+                            adb.dismiss()
+                            viewModel.generateNewSentence() }
+                        .setNegativeButton(R.string.cancel) { adb, _ ->
+                            adb.cancel()
+                        }
+                        .show()
+                }
+            }
+        }
+
+        viewModel.generateNewSentence()
+
         return binding.root
     }
+
 }

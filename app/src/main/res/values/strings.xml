@@ -11,4 +11,13 @@
     <string name="generate_store_snackbar_text_success">Sentence stored successfully!</string>
     <string name="generate_store_snackbar_text_failure">Error storing sentence</string>
     <string name="retry">Retry</string>
+    <string name="generate_sentence_error">Something went wrong generating a new sentence!</string>
+    <string name="cancel">Cancel</string>
+    <string name="settings_new_noun">Find a new noun</string>
+    <string name="settings_new_verb">Find a new verb</string>
+    <string name="settings_new_preposition">Find a new preposition</string>
+    <string name="settings">Settings</string>
+    <string name="added_new_word">Successfully added a new %s to the database!</string>
+    <string name="error_adding_word">An error occurred adding a new word to the database!</string>
+    <string name="app_settings">App Settings</string>
 </resources>

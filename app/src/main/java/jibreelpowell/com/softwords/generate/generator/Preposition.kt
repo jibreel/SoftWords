@@ -1,24 +1,14 @@
 package jibreelpowell.com.softwords.generate.generator
 
-class Preposition(name: String): Word() {
-    val name: String = name.toLowerCase()
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-    override fun asString() = name
+@Entity(tableName = "prepositions")
+data class Preposition(@PrimaryKey val name: String): Word() {
 
-    companion object {
-        private val prepositions = listOf(
-                Preposition("in"),
-                Preposition("on"),
-                Preposition("from"),
-                Preposition("below"),
-                Preposition("under"),
-                Preposition("inside of"),
-                Preposition("between"),
-                Preposition("like"),
-                Preposition("because of"),
-                Preposition("except")
-        )
-
-        fun random() = prepositions.random()
-    }
+    override fun toString() = name
+    override val partOfSpeech: PartOfSpeech
+        get() {
+            return PartOfSpeech.PREPOSITION
+        }
 }

@@ -15,4 +15,10 @@
         android:name="jibreelpowell.com.softwords.history.HistoryFragment"
         android:label="@string/history_fragment_title"
         tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="jibreelpowell.com.softwords.settings.SettingsFragment"
+        android:label="@string/app_settings"
+        tools:layout="@layout/fragment_settings"
+        />
 </navigation>
