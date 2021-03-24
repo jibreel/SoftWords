@@ -6,7 +6,7 @@ import retrofit2.http.Path
 
 interface LinguaRobotApiService {
 
-    @GET("v1/entries/en/{entry}")
+    @GET("/language/v1/entries/en/{entry}")
     fun getEntry(@Path("entry") entry: String): Single<LinguaRobotResponse>
 
 }

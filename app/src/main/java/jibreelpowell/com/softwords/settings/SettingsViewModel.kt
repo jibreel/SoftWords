@@ -45,6 +45,7 @@ class SettingsViewModel @Inject constructor(
                     storageResult.value = Result.success(Word.PartOfSpeech.VERB)
                 },
                 onError = {
+                    Timber.e(it)
                     storageResult.value = Result.failure(it)
                 }
             )
