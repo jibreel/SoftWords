@@ -33,7 +33,7 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         val binding = FragmentSettingsBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel

@@ -20,4 +20,6 @@
     <string name="added_new_word">Successfully added a new %s to the database!</string>
     <string name="error_adding_word">An error occurred adding a new word to the database!</string>
     <string name="app_settings">App Settings</string>
+    <string name="snackbar_deleted_sentence">Successfully deleted sentence!</string>
+    <string name="snackbar_delete_sentence_failed">Failed to delete sentence, please try again!</string>
 </resources>
