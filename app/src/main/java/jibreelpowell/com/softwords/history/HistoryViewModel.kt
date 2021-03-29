@@ -22,7 +22,12 @@ class HistoryViewModel @Inject constructor(
 
     fun delete(index: Int) {
         val currentSentences = allSentences.value ?: arrayListOf()
-        val deletedSentence = currentSentences.getOrNull(index) ?: return
+        val deletedSentence = currentSentences.getOrNull(index)
+
+        if (deletedSentence == null) {
+            deletionResult.postValue(Result.failure(IllegalStateException("No sentence exists at specified index")))
+            return
+        }
 
         sentenceDao.delete(deletedSentence).scheduleCompletableInBackground(schedulerProvider).subscribeBy(
             onComplete = { deletionResult.postValue(Result.success(deletedSentence)) },

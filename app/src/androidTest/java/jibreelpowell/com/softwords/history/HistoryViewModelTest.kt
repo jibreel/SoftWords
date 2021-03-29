@@ -53,6 +53,7 @@ class HistoryViewModelTest {
 
     @After
     fun tearDown() {
+        appDatabase.clearAllTables()
         appDatabase.close()
     }
 
@@ -62,5 +63,14 @@ class HistoryViewModelTest {
         viewModel.delete(0)
         val endValue = getValue(viewModel.allSentences).size
         assertEquals(startSize - 1, endValue)
+    }
+
+    @Test
+    fun testDeleteWhenEmpty() {
+        viewModel.delete(0)
+        viewModel.delete(0)
+        val emptySize = getValue(viewModel.allSentences).size
+        viewModel.delete(0)
+        assertEquals(emptySize, getValue(viewModel.allSentences).size)
     }
 }
