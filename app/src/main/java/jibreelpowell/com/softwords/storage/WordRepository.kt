@@ -86,8 +86,7 @@ class WordRepository @Inject constructor(
             val alternatives = arrayListOf<String>()
             alternatives.addAll(nouns.flatMap { it.synonyms ?: listOf() })
             alternatives.addAll(nouns.flatMap { it.typeOf ?: listOf() })
-            alternatives.filterNot { it.contains(' ', true) }
-            alternatives.firstOrNull()
+            alternatives.filterNot { it.contains(' ', true) }.firstOrNull()
         } else {
             wordsResponse.word
         }
