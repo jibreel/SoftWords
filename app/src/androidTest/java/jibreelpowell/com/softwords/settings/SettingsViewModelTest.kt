@@ -23,6 +23,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnit
+import org.mockito.junit.MockitoRule
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.mockito.quality.Strictness
@@ -33,18 +34,18 @@ class SettingsViewModelTest {
     lateinit var viewModel: SettingsViewModel
 
     @get:Rule
-    val mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS)
+    val mockitoRule: MockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS)
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    val wordsApiService = mock<WordsApiService> {
+    private val wordsApiService = mock<WordsApiService> {
         on { getRandomNoun() } doReturn Single.just(Gson().fromJson(SampleJson.WORDS_TABLE, WordsResponse::class.java))
         on { getRandomVerb() } doReturn Single.just(Gson().fromJson(SampleJson.WORDS_TABLE, WordsResponse::class.java))
         on { getRandomPreposition() } doReturn Single.just(Gson().fromJson(SampleJson.WORDS_RESPONSE_VERSUS, WordsResponse::class.java))
     }
 
-    val linguaRobotApiService = mock<LinguaRobotApiService> {
+    private val linguaRobotApiService = mock<LinguaRobotApiService> {
         on { getEntry("table") } doReturn Single.just(Gson().fromJson(SampleJson.LINGUA_ROBOT_TABLE, LinguaRobotResponse::class.java))
     }
 
