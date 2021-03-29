@@ -27,11 +27,11 @@ class SettingsViewModel @Inject constructor(
             .scheduleCompletableInBackground(schedulerProvider)
             .subscribeBy(
                 onComplete = {
-                    storageResult.value = Result.success(Word.PartOfSpeech.NOUN)
+                    storageResult.postValue(Result.success(Word.PartOfSpeech.NOUN))
                 },
                 onError = {
                     Timber.e(it)
-                    storageResult.value = Result.failure(it)
+                    storageResult.postValue(Result.failure(it))
                 }
             )
     }
@@ -42,11 +42,11 @@ class SettingsViewModel @Inject constructor(
             .scheduleCompletableInBackground(schedulerProvider)
             .subscribeBy(
                 onComplete = {
-                    storageResult.value = Result.success(Word.PartOfSpeech.VERB)
+                    storageResult.postValue(Result.success(Word.PartOfSpeech.VERB))
                 },
                 onError = {
                     Timber.e(it)
-                    storageResult.value = Result.failure(it)
+                    storageResult.postValue(Result.failure(it))
                 }
             )
     }
@@ -57,10 +57,10 @@ class SettingsViewModel @Inject constructor(
             .scheduleCompletableInBackground(schedulerProvider)
             .subscribeBy(
                 onComplete = {
-                    storageResult.value = Result.success(Word.PartOfSpeech.PREPOSITION)
+                    storageResult.postValue(Result.success(Word.PartOfSpeech.PREPOSITION))
                 },
                 onError = {
-                    storageResult.value = Result.failure(it)
+                    storageResult.postValue(Result.failure(it))
                 }
             )
     }

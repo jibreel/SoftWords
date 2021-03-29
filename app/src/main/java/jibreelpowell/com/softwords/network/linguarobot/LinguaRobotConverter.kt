@@ -2,9 +2,8 @@ package jibreelpowell.com.softwords.network.linguarobot
 
 import jibreelpowell.com.softwords.generate.generator.Noun
 import jibreelpowell.com.softwords.generate.generator.Verb
-import javax.inject.Inject
 
-class LinguaRobotConverter @Inject constructor() {
+object LinguaRobotConverter {
 
     fun convertResponseToNoun(response: LinguaRobotResponse): Noun {
         val nouns = response.entries.flatMap { it.lexemes }.filter { it.partOfSpeech == NOUN }
@@ -68,7 +67,6 @@ class LinguaRobotConverter @Inject constructor() {
         }
     }
 
-    companion object {
         const val NOUN = "noun"
         const val VERB = "verb"
         const val OBSOLETE = "obsolete"
@@ -79,5 +77,4 @@ class LinguaRobotConverter @Inject constructor() {
         const val FIRST_PERSON = "first-person"
         const val SECOND_PERSON = "second-person"
         const val THIRD_PERSON = "third-person"
-    }
 }

@@ -19,8 +19,7 @@ class WordRepository @Inject constructor(
     private val prepositionDao: PrepositionDao,
     private val schedulerProvider: SchedulerProvider,
     private val wordsApiService: WordsApiService,
-    private val linguaRobotApiService: LinguaRobotApiService,
-    private val linguaRobotConverter: LinguaRobotConverter
+    private val linguaRobotApiService: LinguaRobotApiService
 ) {
 
     fun getRandomNouns(number: Int): Single<List<Noun>> = nounDao.loadRandom(number)
@@ -37,7 +36,7 @@ class WordRepository @Inject constructor(
             .flatMap {
                 linguaRobotApiService.getEntry(it)
             }.map {
-                linguaRobotConverter.convertResponseToNoun(it)
+                LinguaRobotConverter.convertResponseToNoun(it)
             }
     }
 
@@ -48,7 +47,7 @@ class WordRepository @Inject constructor(
             }.flatMap {
                 linguaRobotApiService.getEntry(it)
             }.map {
-                linguaRobotConverter.convertResponseToVerb(it)
+                LinguaRobotConverter.convertResponseToVerb(it)
             }
     }
 
