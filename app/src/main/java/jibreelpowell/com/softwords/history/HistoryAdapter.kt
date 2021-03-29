@@ -7,7 +7,7 @@ import jibreelpowell.com.softwords.R
 import jibreelpowell.com.softwords.databinding.ItemHistoryBinding
 import jibreelpowell.com.softwords.history.item.HistoryItemPresenter
 import jibreelpowell.com.softwords.storage.GeneratedSentence
-import jibreelpowell.com.softwords.utils.DataBoundListAdapter
+import jibreelpowell.com.softwords.utils.recyclerview.DataBoundListAdapter
 import javax.inject.Inject
 import javax.inject.Provider
 

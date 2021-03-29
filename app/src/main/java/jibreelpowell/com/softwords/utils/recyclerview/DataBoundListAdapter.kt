@@ -1,4 +1,4 @@
-package jibreelpowell.com.softwords.utils
+package jibreelpowell.com.softwords.utils.recyclerview
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
