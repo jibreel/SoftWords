@@ -67,10 +67,18 @@ class HistoryViewModelTest {
 
     @Test
     fun testDeleteWhenEmpty() {
+        Log.d("HistoryViewModelTest#testDeleteWhenEmpty", "${getValue(viewModel.allSentences)}")
         viewModel.delete(0)
         viewModel.delete(0)
         val emptySize = getValue(viewModel.allSentences).size
         viewModel.delete(0)
+        assertEquals(emptySize, getValue(viewModel.allSentences).size)
+    }
+
+    @Test
+    fun testDeleteInvalid() {
+        val emptySize = getValue(viewModel.allSentences).size
+        viewModel.delete(3)
         assertEquals(emptySize, getValue(viewModel.allSentences).size)
     }
 }

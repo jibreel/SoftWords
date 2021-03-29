@@ -8,6 +8,7 @@ import android.graphics.PorterDuffXfermode
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import jibreelpowell.com.softwords.R
@@ -16,7 +17,9 @@ class SwipeToDeleteItemTouchHelper(context: Context, deleteCallback: (index: Int
 
 class SimpleSwipeToDeleteCallback(context: Context, val deleteCallback: (index: Int) -> Unit): ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
-    private val deleteSweepIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete_sweep)
+    private val deleteSweepIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete_sweep)?.let {
+        DrawableCompat.wrap(it)
+    }
     private val iconIntrinsicWidth = deleteSweepIcon?.intrinsicWidth ?: 0
     private val iconIntrinsicHeight = deleteSweepIcon?.intrinsicHeight ?: 0
     private val background = ColorDrawable()
@@ -59,11 +62,6 @@ class SimpleSwipeToDeleteCallback(context: Context, val deleteCallback: (index: 
             return
         }
 
-        //draw the red delete background
-        background.color = backgroundColor
-        background.bounds = bounds
-        background.draw(c)
-
         //Calculate delete icon position
         val deleteIconMargin = (itemHeight - iconIntrinsicHeight) / 2
         val deleteIconLeft = itemView.right - deleteIconMargin - iconIntrinsicWidth
@@ -72,6 +70,7 @@ class SimpleSwipeToDeleteCallback(context: Context, val deleteCallback: (index: 
         val deleteIconBottom = deleteIconTop + iconIntrinsicHeight
 
         deleteSweepIcon?.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom)
+        deleteSweepIcon?.setTint(backgroundColor)
         deleteSweepIcon?.draw(c)
 
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
