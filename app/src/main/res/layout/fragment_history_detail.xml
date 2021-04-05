@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context='.history.detail.HistoryDetailFragment'>
+
+    <data>
+        <variable
+            name="viewModel"
+            type="jibreelpowell.com.softwords.history.detail.HistoryDetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:id="@+id/history_detail_text_view_sentence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.sentenceText}"
+            tools:text="The sentence describes the galaxy"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/history_detail_text_view_timestamp"
+            />
+
+        <TextView
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:id="@+id/history_detail_text_view_timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.sentenceTimestamp}"
+            tools:text="April 5, 2021 11:55AM"
+            app:layout_constraintTop_toBottomOf="@id/history_detail_text_view_sentence"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <Button
+            android:id="@+id/history_detail_button_share"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/share"
+            android:layout_margin="@dimen/spacing_small_8"
+            android:onClick="@{() -> viewModel.share()}"
+            app:layout_constraintTop_toBottomOf="@id/history_detail_text_view_timestamp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <Button
+            android:id="@+id/history_detail_button_delete"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/share"
+            android:layout_margin="@dimen/spacing_small_8"
+            android:onClick="@{() -> viewModel.delete()}"
+            app:layout_constraintTop_toBottomOf="@id/history_detail_button_share"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
