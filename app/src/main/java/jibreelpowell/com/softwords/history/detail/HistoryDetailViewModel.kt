@@ -15,9 +15,9 @@ class HistoryDetailViewModel @Inject constructor(
     val sentenceText = MutableLiveData<String>()
     val sentenceTimestamp = MutableLiveData<String>()
 
-    var closeCallBack : () -> Unit = {
-        Timber.v("Close Callback was never set")
-    }
+        var closeCallBack : () -> Unit = {
+            Timber.v("Close Callback was never set")
+        }
 
     fun load() {
         TODO("Load Sentence from DAO")

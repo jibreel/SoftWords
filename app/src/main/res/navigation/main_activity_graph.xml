@@ -14,11 +14,25 @@
         android:id="@+id/navigation_history"
         android:name="jibreelpowell.com.softwords.history.HistoryFragment"
         android:label="@string/history_fragment_title"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_open_history_detail"
+            app:destination="@id/navigation_history_detail" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_settings"
         android:name="jibreelpowell.com.softwords.settings.SettingsFragment"
         android:label="@string/app_settings"
         tools:layout="@layout/fragment_settings"
         />
+    <fragment
+        android:id="@+id/navigation_history_detail"
+        android:name="jibreelpowell.com.softwords.history.detail.HistoryDetailFragment"
+        android:label="@string/navigation_history_detail_label"
+        tools:layout="@layout/fragment_history_detail"
+        >
+        <argument
+            android:name="sentenceId"
+            app:argType="long"/>
+    </fragment>
 </navigation>

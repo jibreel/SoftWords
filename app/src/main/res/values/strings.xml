@@ -23,4 +23,6 @@
     <string name="snackbar_deleted_sentence">Successfully deleted sentence!</string>
     <string name="snackbar_delete_sentence_failed">Failed to delete sentence, please try again!</string>
     <string name="share">Share</string>
+    <string name="delete">Delete</string>
+    <string name="navigation_history_detail_label">History Item Detail</string>
 </resources>

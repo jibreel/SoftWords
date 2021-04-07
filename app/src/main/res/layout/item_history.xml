@@ -18,6 +18,7 @@
         android:elevation="0dp"
         android:layout_marginHorizontal="@dimen/spacing_medium_16"
         android:layout_marginVertical="@dimen/spacing_small_8"
+        android:onClick="@{presenter::onClick}"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
