@@ -25,4 +25,5 @@
     <string name="share">Share</string>
     <string name="delete">Delete</string>
     <string name="navigation_history_detail_label">History Item Detail</string>
+    <string name="error_loading_sentence_message">An error occurred loading the sentence from the database</string>
 </resources>
