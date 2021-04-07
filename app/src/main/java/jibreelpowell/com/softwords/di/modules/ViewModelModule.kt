@@ -9,6 +9,7 @@ import jibreelpowell.com.softwords.di.viewmodel.SoftWordsViewModelFactory
 import jibreelpowell.com.softwords.di.viewmodel.ViewModelKey
 import jibreelpowell.com.softwords.generate.GenerateViewModel
 import jibreelpowell.com.softwords.history.HistoryViewModel
+import jibreelpowell.com.softwords.history.detail.HistoryDetailViewModel
 import jibreelpowell.com.softwords.settings.SettingsViewModel
 
 @Module
@@ -28,6 +29,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SettingsViewModel::class)
     abstract fun bindSettingsViewModel(settingsViewModel: SettingsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(HistoryDetailViewModel::class)
+    abstract fun bindHistoryDetailViewModel(historyDetailViewModel: HistoryDetailViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: SoftWordsViewModelFactory): ViewModelProvider.Factory
