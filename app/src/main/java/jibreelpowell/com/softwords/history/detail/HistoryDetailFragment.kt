@@ -3,6 +3,7 @@ package jibreelpowell.com.softwords.history.detail
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -47,7 +48,7 @@ class HistoryDetailFragment: Fragment() {
                 }
                 else -> {
                     AlertDialog.Builder(context)
-                        .setMessage(getString(R.string.error_loading_sentence_message))
+                        .setMessage(R.string.error_loading_sentence_message)
                         .setPositiveButton(R.string.retry) { dialogInterface: DialogInterface, _: Int ->
                             viewModel.load(args.sentenceId)
                             dialogInterface.dismiss()
@@ -77,6 +78,31 @@ class HistoryDetailFragment: Fragment() {
                     ).setAction(R.string.retry) { viewModel.delete() }
                         .show()
                 }
+            }
+        }
+
+        viewModel.setShareCallback { sentence ->
+            val sendIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, sentence.sentence)
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+        }
+
+        viewModel.shareResult.observe(viewLifecycleOwner) {
+            if (it.isFailure) {
+                AlertDialog.Builder(context)
+                    .setMessage(R.string.sharing_sentence_failed)
+                    .setPositiveButton(R.string.retry) { dialogInterface: DialogInterface, _: Int ->
+                        viewModel.share()
+                        dialogInterface.dismiss()
+                    }
+                    .setNegativeButton(R.string.cancel) { dialogInterface: DialogInterface, _: Int ->
+                        dialogInterface.cancel()
+                    }
             }
         }
 

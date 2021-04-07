@@ -30,6 +30,14 @@ class HistoryDetailViewModel @Inject constructor(
         MutableLiveData()
     }
 
+    val shareResult: MutableLiveData<Result<Boolean>> by lazy {
+        MutableLiveData()
+    }
+
+    private var shareCallback: (sentence: GeneratedSentence) -> Unit = {
+        Timber.v("Share Callback never set")
+    }
+
     val isLoading = MutableLiveData<Boolean>()
 
     fun load(id: Long) {
@@ -69,7 +77,18 @@ class HistoryDetailViewModel @Inject constructor(
         }
     }
 
+    fun setShareCallback(callback: (GeneratedSentence) -> Unit) {
+        shareCallback = callback
+    }
+
     fun share() {
-        TODO("Open Share Intent with Sentence")
+        val sentence = loadResult.value?.getOrNull()
+
+        if (sentence != null) {
+            shareCallback(sentence)
+            shareResult.postValue(Result.success(true))
+        } else {
+            shareResult.postValue(Result.failure(IllegalStateException("No Generated Sentence to be shared")))
+        }
     }
 }
