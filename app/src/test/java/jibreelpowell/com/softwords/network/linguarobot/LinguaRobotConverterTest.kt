@@ -7,17 +7,10 @@ import org.junit.Test
 
 class LinguaRobotConverterTest {
 
-    lateinit var linguaRobotConverter: LinguaRobotConverter
-
-    @Before
-    fun setup() {
-        linguaRobotConverter = LinguaRobotConverter()
-    }
-
     @Test
     fun testConvertResponseToNoun() {
         val tableResponse = Gson().fromJson(LinguaRobotSampleJson.TABLE, LinguaRobotResponse::class.java)
-        val table = linguaRobotConverter.convertResponseToNoun(tableResponse)
+        val table = LinguaRobotConverter.convertResponseToNoun(tableResponse)
         assertEquals("tables", table.plural)
         assertEquals("table", table.singular)
     }
@@ -25,7 +18,7 @@ class LinguaRobotConverterTest {
     @Test
     fun testConvertResponseToVerb() {
         val haveResponse = Gson().fromJson(LinguaRobotSampleJson.HAVE, LinguaRobotResponse::class.java)
-        val table = linguaRobotConverter.convertResponseToVerb(haveResponse)
+        val table = LinguaRobotConverter.convertResponseToVerb(haveResponse)
         assertEquals("have", table.firstPersonSingular)
         assertEquals("have", table.firstPersonPlural)
         assertEquals("have", table.secondPerson)
@@ -36,7 +29,7 @@ class LinguaRobotConverterTest {
     @Test
     fun testConvertResponseToIrregularVerb() {
         val doResponse = Gson().fromJson(LinguaRobotSampleJson.DO, LinguaRobotResponse::class.java)
-        val doVerb = linguaRobotConverter.convertResponseToVerb(doResponse)
+        val doVerb = LinguaRobotConverter.convertResponseToVerb(doResponse)
         assertEquals("do", doVerb.firstPersonSingular)
         assertEquals("do", doVerb.firstPersonPlural)
         assertEquals("do", doVerb.secondPerson)
