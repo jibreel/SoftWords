@@ -54,6 +54,7 @@ dependencies {
 
     def room_version = "2.4.1"
     def androidx_lifecycle_version = "2.4.0"
+    def koin_version = "3.1.5"
 
     //AndroidX Libraries
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -136,4 +137,18 @@ dependencies {
 
     //OkHttpLoggingInterceptor
     implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
+
+    // Koin for Dependency Injection
+    // Koin main features for Android
+    implementation "io.insert-koin:koin-android:$koin_version"
+    // Java Compatibility
+        implementation "io.insert-koin:koin-android-compat:$koin_version"
+    // Jetpack WorkManager
+        implementation "io.insert-koin:koin-androidx-workmanager:$koin_version"
+    // Navigation Graph
+        implementation "io.insert-koin:koin-androidx-navigation:$koin_version"
+    // Jetpack Compose
+        implementation "io.insert-koin:koin-androidx-compose:$koin_version"
+
+
 }
