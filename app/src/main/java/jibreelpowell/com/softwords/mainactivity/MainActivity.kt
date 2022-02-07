@@ -9,8 +9,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import jibreelpowell.com.softwords.R
 import jibreelpowell.com.softwords.databinding.ActivityMainBinding
-import jibreelpowell.com.softwords.di.GenerateComponent
-import jibreelpowell.com.softwords.utils.app
 
 class MainActivity : AppCompatActivity() {
 

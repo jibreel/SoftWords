@@ -3,6 +3,7 @@ package jibreelpowell.com.softwords.di.koin.modules
 import android.content.Context
 import jibreelpowell.com.softwords.BuildConfig
 import jibreelpowell.com.softwords.generate.GenerateViewModel
+import jibreelpowell.com.softwords.generate.generator.Generator
 import jibreelpowell.com.softwords.generate.generator.Word
 import jibreelpowell.com.softwords.history.HistoryAdapter
 import jibreelpowell.com.softwords.history.HistoryViewModel
@@ -102,6 +103,8 @@ object Modules {
         }
 
         single<WordRepository> { WordRepository() }
+
+        single<Generator> { Generator() }
     }
 
     val historyModule = module {
