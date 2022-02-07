@@ -150,5 +150,6 @@ dependencies {
     // Jetpack Compose
         implementation "io.insert-koin:koin-androidx-compose:$koin_version"
 
-
+    // required to avoid crash on Android 12 API 31
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
 }

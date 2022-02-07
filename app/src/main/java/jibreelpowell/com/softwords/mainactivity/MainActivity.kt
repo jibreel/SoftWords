@@ -14,11 +14,7 @@ import jibreelpowell.com.softwords.utils.app
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var generateComponent: GenerateComponent
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        generateComponent = app.component.generateComponent().create()
-        generateComponent.inject(this)
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(
             this,

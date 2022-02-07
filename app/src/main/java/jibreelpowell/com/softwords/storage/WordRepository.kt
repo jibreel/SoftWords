@@ -11,16 +11,18 @@ import jibreelpowell.com.softwords.network.words.WordsApiService
 import jibreelpowell.com.softwords.network.words.WordsResponse
 import jibreelpowell.com.softwords.utils.NoViableWordException
 import jibreelpowell.com.softwords.utils.SchedulerProvider
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import javax.inject.Inject
 
-class WordRepository @Inject constructor(
-    private val nounDao: NounDao,
-    private val verbDao: VerbDao,
-    private val prepositionDao: PrepositionDao,
-    private val schedulerProvider: SchedulerProvider,
-    private val wordsApiService: WordsApiService,
-    private val linguaRobotApiService: LinguaRobotApiService
-) {
+class WordRepository () : KoinComponent{
+
+    private val nounDao: NounDao by inject()
+    private val verbDao: VerbDao by inject()
+    private val prepositionDao: PrepositionDao by inject()
+    private val schedulerProvider: SchedulerProvider by inject()
+    private val wordsApiService: WordsApiService by inject()
+    private val linguaRobotApiService: LinguaRobotApiService by inject()
 
     fun getRandomNouns(number: Int): Single<List<Noun>> = nounDao.loadRandom(number)
 

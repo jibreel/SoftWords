@@ -29,7 +29,7 @@ abstract class AppDatabase : RoomDatabase() {
             .scheduleSingleInBackground(schedulerProvider)
             .subscribeBy(
                 onSuccess = { Timber.v("Database Initialized")},
-                onError = { Timber.e(it) }
+                onError = { "Error initializing Database: ${Timber.e(it)}" }
             )
     }
 

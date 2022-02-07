@@ -13,21 +13,11 @@ import com.google.android.material.snackbar.Snackbar
 import jibreelpowell.com.softwords.R
 import jibreelpowell.com.softwords.databinding.FragmentGenerateBinding
 import jibreelpowell.com.softwords.mainactivity.MainActivity
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GenerateFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel: GenerateViewModel by viewModels {
-        viewModelFactory
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as MainActivity).generateComponent.inject(this)
-    }
+    private val viewModel: GenerateViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

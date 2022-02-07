@@ -1,10 +1,16 @@
 package jibreelpowell.com.softwords.di.koin.modules
 
+import android.content.Context
 import jibreelpowell.com.softwords.BuildConfig
+import jibreelpowell.com.softwords.generate.GenerateViewModel
 import jibreelpowell.com.softwords.generate.generator.Word
+import jibreelpowell.com.softwords.history.HistoryAdapter
+import jibreelpowell.com.softwords.history.HistoryViewModel
+import jibreelpowell.com.softwords.history.item.HistoryItemPresenter
 import jibreelpowell.com.softwords.network.linguarobot.LinguaRobotApiService
 import jibreelpowell.com.softwords.network.utils.RapidApiHttpInterceptor
 import jibreelpowell.com.softwords.network.words.WordsApiService
+import jibreelpowell.com.softwords.settings.SettingsViewModel
 import jibreelpowell.com.softwords.storage.*
 import jibreelpowell.com.softwords.utils.SchedulerProvider
 import jibreelpowell.com.softwords.utils.SchedulerProviderImpl
@@ -71,7 +77,8 @@ object Modules {
     val storageModule = module {
         single<AppDatabase> { params ->
             val schedulerProvider: SchedulerProvider = get()
-            AppDatabase.getInstance(params.get(), schedulerProvider)
+            val context: Context = params.get()
+            AppDatabase.getInstance(context, schedulerProvider)
         }
 
         single<SentenceDao> {
@@ -93,5 +100,22 @@ object Modules {
             val appDatabase: AppDatabase = get()
             appDatabase.prepositionDao()
         }
+
+        single<WordRepository> { WordRepository() }
+    }
+
+    val historyModule = module {
+        factory<HistoryItemPresenter> { HistoryItemPresenter() }
+
+        factory<HistoryAdapter> { HistoryAdapter() }
+
+    }
+
+    val viewModelModule = module {
+        single<SettingsViewModel> { SettingsViewModel(get(), get()) }
+
+        single<HistoryViewModel> { HistoryViewModel(get(), get()) }
+
+        single<GenerateViewModel> { GenerateViewModel(get(), get(), get()) }
     }
 }

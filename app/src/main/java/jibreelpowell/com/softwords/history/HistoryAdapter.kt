@@ -8,12 +8,10 @@ import jibreelpowell.com.softwords.databinding.ItemHistoryBinding
 import jibreelpowell.com.softwords.history.item.HistoryItemPresenter
 import jibreelpowell.com.softwords.storage.GeneratedSentence
 import jibreelpowell.com.softwords.utils.recyclerview.DataBoundListAdapter
-import javax.inject.Inject
-import javax.inject.Provider
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
-class HistoryAdapter @Inject constructor(
-    private val itemPresenterProvider: Provider<HistoryItemPresenter>
-) : DataBoundListAdapter<GeneratedSentence, ItemHistoryBinding>(GeneratedSentence.diffCallback) {
+class HistoryAdapter : DataBoundListAdapter<GeneratedSentence, ItemHistoryBinding>(GeneratedSentence.diffCallback), KoinComponent {
 
     override fun createBinding(parent: ViewGroup): ItemHistoryBinding {
         val binding = DataBindingUtil.inflate<ItemHistoryBinding>(
@@ -22,7 +20,8 @@ class HistoryAdapter @Inject constructor(
             parent,
             false
         )
-        binding.presenter = itemPresenterProvider.get()
+        val presenter:  HistoryItemPresenter = get()
+        binding.presenter = presenter
         return binding
     }
 
