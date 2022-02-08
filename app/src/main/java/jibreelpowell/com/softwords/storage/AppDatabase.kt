@@ -15,6 +15,7 @@ import jibreelpowell.com.softwords.utils.DATABASE_NAME
 import jibreelpowell.com.softwords.utils.SchedulerProvider
 import jibreelpowell.com.softwords.utils.scheduleSingleInBackground
 import timber.log.Timber
+import java.lang.Exception
 
 @Database(entities = [GeneratedSentence::class, Noun::class, Verb::class, Preposition::class], version = 1)
 @TypeConverters(Converters::class)
@@ -28,7 +29,7 @@ abstract class AppDatabase : RoomDatabase() {
         nounDao().loadRandom(1)
             .scheduleSingleInBackground(schedulerProvider)
             .subscribeBy(
-                onSuccess = { Timber.v("Database Initialized")},
+                onSuccess = { Timber.v("Database Initialized, ${it[0]}")},
                 onError = { "Error initializing Database: ${Timber.e(it)}" }
             )
     }
@@ -37,10 +38,12 @@ abstract class AppDatabase : RoomDatabase() {
 
         @Volatile private var INSTANCE: AppDatabase? = null
 
-        fun getInstance(context: Context, schedulerProvider: SchedulerProvider): AppDatabase =
+        fun createInstance(context: Context, schedulerProvider: SchedulerProvider): AppDatabase =
             INSTANCE ?: synchronized(this)  {
                 INSTANCE ?: buildDatabase(context, schedulerProvider).also { INSTANCE = it }
             }
+
+        fun getInstance(): AppDatabase = INSTANCE ?: throw DatabaseDoesNotExistException("Please initialize database with createInstance")
 
         private fun buildDatabase(context: Context, schedulerProvider: SchedulerProvider): AppDatabase {
             return Room.databaseBuilder(
@@ -51,7 +54,7 @@ abstract class AppDatabase : RoomDatabase() {
                 object : RoomDatabase.Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
-                        val instance = getInstance(context, schedulerProvider)
+                        val instance = createInstance(context, schedulerProvider)
                         val completable1 =
                             instance.nounDao().insertAll(initialNouns).subscribeOn(schedulerProvider.io)
                         val completable2 =
@@ -111,4 +114,6 @@ abstract class AppDatabase : RoomDatabase() {
             Preposition("except")
         )
     }
+
+    class DatabaseDoesNotExistException(message: String): Exception(message)
 }

@@ -4,7 +4,6 @@ import android.content.Context
 import jibreelpowell.com.softwords.BuildConfig
 import jibreelpowell.com.softwords.generate.GenerateViewModel
 import jibreelpowell.com.softwords.generate.generator.Generator
-import jibreelpowell.com.softwords.generate.generator.Word
 import jibreelpowell.com.softwords.history.HistoryAdapter
 import jibreelpowell.com.softwords.history.HistoryViewModel
 import jibreelpowell.com.softwords.history.item.HistoryItemPresenter
@@ -17,9 +16,7 @@ import jibreelpowell.com.softwords.utils.SchedulerProvider
 import jibreelpowell.com.softwords.utils.SchedulerProviderImpl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.androidx.compose.get
 import org.koin.core.qualifier.named
-import org.koin.core.scope.get
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
@@ -76,10 +73,8 @@ object Modules {
     }
 
     val storageModule = module {
-        single<AppDatabase> { params ->
-            val schedulerProvider: SchedulerProvider = get()
-            val context: Context = params.get()
-            AppDatabase.getInstance(context, schedulerProvider)
+        factory<AppDatabase> {
+            AppDatabase.getInstance()
         }
 
         single<SentenceDao> {

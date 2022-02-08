@@ -8,7 +8,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import javax.inject.Inject
 
-class Generator () : KoinComponent {
+class Generator : KoinComponent {
 
     private val repository: WordRepository by inject()
     private val schedulerProvider: SchedulerProvider by inject()

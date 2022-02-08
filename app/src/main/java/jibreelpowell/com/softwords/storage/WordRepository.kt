@@ -15,7 +15,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import javax.inject.Inject
 
-class WordRepository () : KoinComponent{
+class WordRepository : KoinComponent {
 
     private val nounDao: NounDao by inject()
     private val verbDao: VerbDao by inject()
