@@ -13,21 +13,14 @@ import jibreelpowell.com.softwords.R
 import jibreelpowell.com.softwords.databinding.FragmentHistoryBinding
 import jibreelpowell.com.softwords.mainactivity.MainActivity
 import jibreelpowell.com.softwords.utils.recyclerview.SwipeToDeleteItemTouchHelper
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HistoryFragment : Fragment() {
 
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-    @Inject lateinit var adapter: HistoryAdapter
+    private val adapter: HistoryAdapter by inject()
 
-    private val viewModel: HistoryViewModel by viewModels {
-        viewModelFactory
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as MainActivity).generateComponent.inject(this)
-    }
+    private val viewModel: HistoryViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

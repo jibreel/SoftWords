@@ -10,7 +10,7 @@ import jibreelpowell.com.softwords.utils.scheduleCompletableInBackground
 import timber.log.Timber
 import javax.inject.Inject
 
-class HistoryViewModel @Inject constructor(
+class HistoryViewModel(
     val sentenceDao: SentenceDao,
     val schedulerProvider: SchedulerProvider
 ) : ViewModel()  {

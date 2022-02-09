@@ -13,21 +13,13 @@ import jibreelpowell.com.softwords.R
 import jibreelpowell.com.softwords.databinding.FragmentSettingsBinding
 import jibreelpowell.com.softwords.generate.generator.Word
 import jibreelpowell.com.softwords.mainactivity.MainActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Locale
 import javax.inject.Inject
 
 class SettingsFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val viewModel: SettingsViewModel by viewModels {
-        viewModelFactory
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as MainActivity).generateComponent.inject(this)
-    }
+    private val viewModel: SettingsViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

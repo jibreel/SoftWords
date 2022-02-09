@@ -5,7 +5,7 @@ import jibreelpowell.com.softwords.storage.GeneratedSentence
 import org.threeten.bp.format.DateTimeFormatter
 import javax.inject.Inject
 
-class HistoryItemPresenter @Inject constructor() {
+class HistoryItemPresenter {
 
     val sentence = ObservableField<String>()
     val timestamp = ObservableField<String>()

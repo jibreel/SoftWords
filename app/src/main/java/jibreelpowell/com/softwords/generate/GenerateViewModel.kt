@@ -14,7 +14,7 @@ import jibreelpowell.com.softwords.utils.scheduleCompletableInBackground
 import timber.log.Timber
 import javax.inject.Inject
 
-class GenerateViewModel @Inject constructor(
+class GenerateViewModel(
     private val sentenceDao: SentenceDao,
     private val generator: Generator,
     private val schedulerProvider: SchedulerProvider

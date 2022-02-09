@@ -4,12 +4,14 @@ import io.reactivex.rxjava3.core.Single
 import jibreelpowell.com.softwords.generate.generator.GrammaticalPerson.THIRD
 import jibreelpowell.com.softwords.storage.WordRepository
 import jibreelpowell.com.softwords.utils.SchedulerProvider
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import javax.inject.Inject
 
-class Generator @Inject constructor(
-    private val repository: WordRepository,
-    private val schedulerProvider: SchedulerProvider
-    ) {
+class Generator : KoinComponent {
+
+    private val repository: WordRepository by inject()
+    private val schedulerProvider: SchedulerProvider by inject()
 
     fun generateRandomSentence(pattern: Pattern): Single<Sentence> {
         val numNouns = pattern.parts.count { it == Word.PartOfSpeech.NOUN }
