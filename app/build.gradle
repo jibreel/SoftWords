@@ -152,4 +152,12 @@ dependencies {
 
     // required to avoid crash on Android 12 API 31
     implementation 'androidx.work:work-runtime-ktx:2.7.1'
+
+    // Kotlin Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+
+    // ViewModel KTX Extensions for Coroutines
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0-alpha02"
+
+
 }
