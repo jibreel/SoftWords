@@ -5,6 +5,4 @@ interface SchedulerProvider {
     abstract val computation : Scheduler
     abstract val io: Scheduler
     abstract val ui: Scheduler
-
-
 }

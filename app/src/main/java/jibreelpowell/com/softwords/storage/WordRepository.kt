@@ -1,7 +1,5 @@
 package jibreelpowell.com.softwords.storage
 
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
 import jibreelpowell.com.softwords.generate.generator.Noun
 import jibreelpowell.com.softwords.generate.generator.Preposition
 import jibreelpowell.com.softwords.generate.generator.Verb
@@ -9,11 +7,14 @@ import jibreelpowell.com.softwords.network.linguarobot.LinguaRobotApiService
 import jibreelpowell.com.softwords.network.linguarobot.LinguaRobotConverter
 import jibreelpowell.com.softwords.network.words.WordsApiService
 import jibreelpowell.com.softwords.network.words.WordsResponse
+import jibreelpowell.com.softwords.utils.DispatcherProvider
 import jibreelpowell.com.softwords.utils.NoViableWordException
 import jibreelpowell.com.softwords.utils.SchedulerProvider
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import javax.inject.Inject
 
 class WordRepository : KoinComponent {
 
@@ -21,64 +22,92 @@ class WordRepository : KoinComponent {
     private val verbDao: VerbDao by inject()
     private val prepositionDao: PrepositionDao by inject()
     private val schedulerProvider: SchedulerProvider by inject()
+    private val dispatcherProvider: DispatcherProvider by inject()
     private val wordsApiService: WordsApiService by inject()
     private val linguaRobotApiService: LinguaRobotApiService by inject()
 
-    fun getRandomNouns(number: Int): Single<List<Noun>> = nounDao.loadRandom(number)
-
-    fun getRandomVerbs(number: Int): Single<List<Verb>> = verbDao.loadRandom(number)
-
-    fun getRandomPreposition(number: Int): Single<List<Preposition>> = prepositionDao.loadRandom(number)
-
-    private fun fetchNewNoun(): Single<Noun> {
-        return wordsApiService.getRandomNoun()
-            .map { wordsResponse ->
-                searchForSimpleWord(wordsResponse) ?: throw NoViableWordException("Cannot process complex nouns")
-            }
-            .flatMap {
-                linguaRobotApiService.getEntry(it)
-            }.map {
-                LinguaRobotConverter.convertResponseToNoun(it)
-            }
+    suspend fun getRandomNouns(number: Int): List<Noun> {
+        return withContext(dispatcherProvider.io) {
+            nounDao.loadRandom(number)
+        }
     }
 
-    private fun fetchNewVerb(): Single<Verb> {
-        return wordsApiService.getRandomVerb()
-            .map { wordsResponse ->
-                searchForSimpleWord(wordsResponse) ?: throw NoViableWordException("Cannot process complex verbs")
-            }.flatMap {
-                linguaRobotApiService.getEntry(it)
-            }.map {
-                LinguaRobotConverter.convertResponseToVerb(it)
-            }
+    suspend fun getRandomVerbs(number: Int): List<Verb> {
+        return withContext(dispatcherProvider.io) {
+            verbDao.loadRandom(number)
+        }
     }
 
-    private fun fetchNewPreposition(): Single<Preposition> {
-        return wordsApiService.getRandomPreposition().map { Preposition(it.word) }
+    suspend fun getRandomPreposition(number: Int): List<Preposition> {
+        return withContext(dispatcherProvider.io) {
+            prepositionDao.loadRandom(number)
+        }
     }
 
-    fun addNewNounToStorage(): Completable {
-        return fetchNewNoun()
-            .concatMapCompletable {
-                nounDao.insertAll(arrayListOf(it))
-            }
-            .subscribeOn(schedulerProvider.io)
+    private suspend fun fetchNewNoun(): Noun {
+        val noun = withContext(dispatcherProvider.io) {
+            val wordsResponse = wordsApiService.getRandomNoun()
+            val robotResponse = linguaRobotApiService.getEntry(wordsResponse.forceToSimpleWord())
+            LinguaRobotConverter.convertResponseToNoun(robotResponse)
+        }
+
+        return noun
     }
 
-    fun addNewVerbToStorage(): Completable {
-        return fetchNewVerb()
-            .concatMapCompletable {
-                verbDao.insertAll(arrayListOf(it))
-            }
-            .subscribeOn(schedulerProvider.io)
+    private suspend fun fetchNewVerb(): Verb {
+        val verb = withContext(dispatcherProvider.io) {
+            val wordsResponse = wordsApiService.getRandomVerb()
+            val robotResponse = linguaRobotApiService.getEntry(wordsResponse.forceToSimpleWord())
+            LinguaRobotConverter.convertResponseToVerb(robotResponse)
+        }
+        return verb
     }
 
-    fun addNewPrepositionToStorage(): Completable {
-        return fetchNewPreposition()
-            .concatMapCompletable {
-                prepositionDao.insertAll(arrayListOf(it))
+    private suspend fun fetchNewPreposition(): Preposition {
+        val prep = withContext(dispatcherProvider.io){
+            val wordsResponse = wordsApiService.getRandomPreposition()
+            wordsResponse.word
+
+        }
+        return Preposition(prep)
+    }
+
+    suspend fun addNewNounToStorage(): Result<Noun> {
+        return try {
+            val noun = fetchNewNoun()
+            withContext(dispatcherProvider.io) {
+                nounDao.insertAll(arrayListOf(noun))
             }
-            .subscribeOn(schedulerProvider.io)
+            Result.success(noun)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun addNewVerbToStorage(): Result<Verb> {
+        return try {
+            val verb = fetchNewVerb()
+            withContext(dispatcherProvider.io) {
+                verbDao.insertAll(arrayListOf(verb))
+            }
+            Result.success(verb)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+
+
+    }
+
+    suspend fun addNewPrepositionToStorage(): Result<Preposition> {
+        return try {
+            val prep = fetchNewPreposition()
+            withContext(dispatcherProvider.io) {
+                prepositionDao.insertAll(arrayListOf(prep))
+            }
+            Result.success(prep)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
 
     }
 
@@ -92,5 +121,9 @@ class WordRepository : KoinComponent {
         } else {
             wordsResponse.word
         }
+    }
+
+    private fun WordsResponse.forceToSimpleWord(): String {
+        return searchForSimpleWord(this) ?: throw NoViableWordException("Cannot process complex words")
     }
 }

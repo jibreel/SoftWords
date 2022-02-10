@@ -2,11 +2,13 @@ package jibreelpowell.com.softwords.settings
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import jibreelpowell.com.softwords.generate.generator.Word
 import jibreelpowell.com.softwords.storage.WordRepository
 import jibreelpowell.com.softwords.utils.SchedulerProvider
 import jibreelpowell.com.softwords.utils.scheduleCompletableInBackground
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -23,45 +25,41 @@ class SettingsViewModel(
 
     fun addNewNoun() {
         lastRequestedAddition = Word.PartOfSpeech.NOUN
-        wordRepository.addNewNounToStorage()
-            .scheduleCompletableInBackground(schedulerProvider)
-            .subscribeBy(
-                onComplete = {
-                    storageResult.postValue(Result.success(Word.PartOfSpeech.NOUN))
-                },
-                onError = {
-                    Timber.e(it)
-                    storageResult.postValue(Result.failure(it))
-                }
-            )
+        viewModelScope.launch {
+            val result = wordRepository.addNewNounToStorage()
+            if (result.isSuccess) {
+                storageResult.postValue(Result.success(Word.PartOfSpeech.NOUN))
+            } else {
+                Timber.e(result.exceptionOrNull())
+                storageResult.postValue(Result.failure(result.exceptionOrNull()!!))
+            }
+
+        }
     }
 
     fun addNewVerb() {
         lastRequestedAddition = Word.PartOfSpeech.VERB
-        wordRepository.addNewVerbToStorage()
-            .scheduleCompletableInBackground(schedulerProvider)
-            .subscribeBy(
-                onComplete = {
-                    storageResult.postValue(Result.success(Word.PartOfSpeech.VERB))
-                },
-                onError = {
-                    Timber.e(it)
-                    storageResult.postValue(Result.failure(it))
-                }
-            )
+        viewModelScope.launch {
+            val result = wordRepository.addNewVerbToStorage()
+            if (result.isSuccess) {
+                storageResult.postValue(Result.success(Word.PartOfSpeech.VERB))
+            } else {
+                Timber.e(result.exceptionOrNull())
+                storageResult.postValue(Result.failure(result.exceptionOrNull()!!))
+            }
+        }
     }
 
     fun addNewPreposition() {
         lastRequestedAddition = Word.PartOfSpeech.PREPOSITION
-        wordRepository.addNewPrepositionToStorage()
-            .scheduleCompletableInBackground(schedulerProvider)
-            .subscribeBy(
-                onComplete = {
-                    storageResult.postValue(Result.success(Word.PartOfSpeech.PREPOSITION))
-                },
-                onError = {
-                    storageResult.postValue(Result.failure(it))
-                }
-            )
+        viewModelScope.launch {
+            val result = wordRepository.addNewPrepositionToStorage()
+            if (result.isSuccess) {
+                storageResult.postValue(Result.success(Word.PartOfSpeech.PREPOSITION))
+            } else {
+                Timber.e(result.exceptionOrNull())
+                storageResult.postValue(Result.failure(result.exceptionOrNull()!!))
+            }
+        }
     }
 }

@@ -12,6 +12,8 @@ import jibreelpowell.com.softwords.network.utils.RapidApiHttpInterceptor
 import jibreelpowell.com.softwords.network.words.WordsApiService
 import jibreelpowell.com.softwords.settings.SettingsViewModel
 import jibreelpowell.com.softwords.storage.*
+import jibreelpowell.com.softwords.utils.DispatcherProvider
+import jibreelpowell.com.softwords.utils.DispatcherProviderImpl
 import jibreelpowell.com.softwords.utils.SchedulerProvider
 import jibreelpowell.com.softwords.utils.SchedulerProviderImpl
 import okhttp3.OkHttpClient
@@ -26,6 +28,7 @@ object Modules {
 
     val utilityModule = module {
         single<SchedulerProvider> { SchedulerProviderImpl() }
+        single<DispatcherProvider> { DispatcherProviderImpl() }
     }
 
     val networkModule = module {

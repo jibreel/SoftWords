@@ -11,8 +11,8 @@ import jibreelpowell.com.softwords.generate.generator.Noun
 @Dao
 interface NounDao {
     @Query("SELECT * FROM nouns ORDER BY RANDOM() LIMIT :number")
-    fun loadRandom(number: Int): Single<List<Noun>>
+    suspend fun loadRandom(number: Int): List<Noun>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertAll(nouns: List<Noun>): Completable
+    suspend fun insertAll(nouns: List<Noun>)
 }

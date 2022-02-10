@@ -11,8 +11,8 @@ import jibreelpowell.com.softwords.generate.generator.Verb
 @Dao
 interface VerbDao {
     @Query("SELECT * FROM verbs ORDER BY RANDOM() LIMIT :number")
-    fun loadRandom(number: Int): Single<List<Verb>>
+    suspend fun loadRandom(number: Int): List<Verb>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertAll(verb: List<Verb>): Completable
+    suspend fun insertAll(verb: List<Verb>)
 }

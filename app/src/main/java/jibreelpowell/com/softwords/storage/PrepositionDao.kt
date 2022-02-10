@@ -11,8 +11,8 @@ import jibreelpowell.com.softwords.generate.generator.Preposition
 @Dao
 interface PrepositionDao {
     @Query("SELECT * FROM prepositions ORDER BY RANDOM() LIMIT :number")
-    fun loadRandom(number: Int): Single<List<Preposition>>
+    suspend fun loadRandom(number: Int): List<Preposition>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertAll(prepositions: List<Preposition>): Completable
+    suspend fun insertAll(prepositions: List<Preposition>)
 }
