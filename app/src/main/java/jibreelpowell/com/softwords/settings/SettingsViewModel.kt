@@ -13,8 +13,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class SettingsViewModel(
-    private val wordRepository: WordRepository,
-    private val schedulerProvider: SchedulerProvider
+    private val wordRepository: WordRepository
 ) : ViewModel() {
 
     val storageResult: MutableLiveData<Result<Word.PartOfSpeech>> by lazy {

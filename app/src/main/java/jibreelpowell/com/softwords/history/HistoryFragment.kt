@@ -28,6 +28,8 @@ class HistoryFragment : Fragment() {
     ): View {
         val binding = FragmentHistoryBinding.inflate(inflater, container, false)
 
+        viewModel.initialize()
+
         viewModel.allSentences.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }

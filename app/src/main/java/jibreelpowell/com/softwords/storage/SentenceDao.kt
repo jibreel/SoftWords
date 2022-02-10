@@ -14,8 +14,8 @@ interface SentenceDao {
     fun loadAllSentences(): LiveData<List<GeneratedSentence>>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertAll(vararg sentences: GeneratedSentence): Completable
+    suspend fun insertAll(vararg sentences: GeneratedSentence)
 
     @Delete
-    fun delete(sentence: GeneratedSentence): Completable
+    suspend fun delete(sentence: GeneratedSentence)
 }

@@ -11,6 +11,7 @@ import jibreelpowell.com.softwords.generate.generator.Pattern
 import jibreelpowell.com.softwords.generate.generator.Sentence
 import jibreelpowell.com.softwords.storage.GeneratedSentence
 import jibreelpowell.com.softwords.storage.SentenceDao
+import jibreelpowell.com.softwords.storage.SentenceRepository
 import jibreelpowell.com.softwords.utils.SchedulerProvider
 import jibreelpowell.com.softwords.utils.scheduleCompletableInBackground
 import kotlinx.coroutines.launch
@@ -18,7 +19,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class GenerateViewModel(
-    private val sentenceDao: SentenceDao,
+    private val sentenceRepository: SentenceRepository,
     private val generator: Generator,
     private val schedulerProvider: SchedulerProvider
 ) : ViewModel() {
@@ -61,18 +62,16 @@ class GenerateViewModel(
     fun storeCurrentSentence() {
         sentence.value?.let {
             val generatedSentence = GeneratedSentence.newInstance(it)
-            sentenceDao.insertAll(generatedSentence)
-                .scheduleCompletableInBackground(schedulerProvider)
-                .subscribe(
-                    {
-                        Timber.d("Sentence inserted into database successfully")
-                        storageResult.value = Result.success(generatedSentence)
-                    },
-                    { e ->
-                        Timber.e(e)
-                        storageResult.value = Result.failure(e)
-                    }
-                )
+            viewModelScope.launch {
+                val result = sentenceRepository.insertSentence(generatedSentence)
+                if (result.isSuccess) {
+                    Timber.d("Sentence inserted into database successfully")
+                    storageResult.value = result
+                } else {
+                    Timber.e(result.exceptionOrNull())
+                    storageResult.value = result
+                }
+            }
         }
     }
 

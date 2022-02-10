@@ -102,6 +102,8 @@ object Modules {
 
         single<WordRepository> { WordRepository() }
 
+        single<SentenceRepository> { SentenceRepository() }
+
         single<Generator> { Generator() }
     }
 
@@ -113,7 +115,7 @@ object Modules {
     }
 
     val viewModelModule = module {
-        single<SettingsViewModel> { SettingsViewModel(get(), get()) }
+        single<SettingsViewModel> { SettingsViewModel(get()) }
 
         single<HistoryViewModel> { HistoryViewModel(get(), get()) }
 

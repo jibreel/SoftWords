@@ -6,8 +6,10 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import jibreelpowell.com.softwords.BuildConfig
 import jibreelpowell.com.softwords.di.koin.modules.Modules
 import jibreelpowell.com.softwords.storage.AppDatabase
+import jibreelpowell.com.softwords.utils.DispatcherProviderImpl
 import jibreelpowell.com.softwords.utils.SchedulerProvider
 import jibreelpowell.com.softwords.utils.SchedulerProviderImpl
+import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -30,9 +32,11 @@ class App: Application(), KoinComponent {
             modules(Modules.utilityModule, Modules.networkModule, Modules.storageModule, Modules.historyModule, Modules.viewModelModule)
         }
 
-        val schedulerProvider: SchedulerProvider = SchedulerProviderImpl()
-        val database = AppDatabase.createInstance(applicationContext, schedulerProvider)
-        database.checkInitialization(schedulerProvider)
+        val dispatcherProvider = DispatcherProviderImpl()
+        val database = AppDatabase.createInstance(applicationContext, dispatcherProvider)
+        runBlocking {
+            database.checkInitialization(dispatcherProvider)
+        }
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }

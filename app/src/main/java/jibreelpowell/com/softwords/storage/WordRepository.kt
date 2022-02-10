@@ -21,7 +21,6 @@ class WordRepository : KoinComponent {
     private val nounDao: NounDao by inject()
     private val verbDao: VerbDao by inject()
     private val prepositionDao: PrepositionDao by inject()
-    private val schedulerProvider: SchedulerProvider by inject()
     private val dispatcherProvider: DispatcherProvider by inject()
     private val wordsApiService: WordsApiService by inject()
     private val linguaRobotApiService: LinguaRobotApiService by inject()

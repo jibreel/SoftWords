@@ -6,16 +6,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import io.reactivex.rxjava3.kotlin.subscribeBy
 import jibreelpowell.com.softwords.generate.generator.Noun
 import jibreelpowell.com.softwords.generate.generator.Preposition
 import jibreelpowell.com.softwords.generate.generator.Verb
 import jibreelpowell.com.softwords.utils.Converters
 import jibreelpowell.com.softwords.utils.DATABASE_NAME
-import jibreelpowell.com.softwords.utils.SchedulerProvider
-import jibreelpowell.com.softwords.utils.scheduleSingleInBackground
+import jibreelpowell.com.softwords.utils.DispatcherProvider
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import timber.log.Timber
-import java.lang.Exception
 
 @Database(entities = [GeneratedSentence::class, Noun::class, Verb::class, Preposition::class], version = 1)
 @TypeConverters(Converters::class)
@@ -25,27 +24,29 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun verbDao(): VerbDao
     abstract fun prepositionDao(): PrepositionDao
 
-    fun checkInitialization(schedulerProvider: SchedulerProvider) {
-        nounDao().loadRandom(1)
-            .scheduleSingleInBackground(schedulerProvider)
-            .subscribeBy(
-                onSuccess = { Timber.v("Database Initialized, ${it[0]}")},
-                onError = { "Error initializing Database: ${Timber.e(it)}" }
-            )
+    suspend fun checkInitialization(dispatcherProvider: DispatcherProvider) {
+        try {
+            withContext(dispatcherProvider.io) {
+                val noun = nounDao().loadRandom(1)[0]
+            }
+            Timber.v("Database Initialized")
+        } catch (e: Exception) {
+            Timber.e(e, "Error initializing database")
+        }
     }
 
     companion object {
 
         @Volatile private var INSTANCE: AppDatabase? = null
 
-        fun createInstance(context: Context, schedulerProvider: SchedulerProvider): AppDatabase =
+        fun createInstance(context: Context, dispatcherProvider: DispatcherProvider): AppDatabase =
             INSTANCE ?: synchronized(this)  {
-                INSTANCE ?: buildDatabase(context, schedulerProvider).also { INSTANCE = it }
+                INSTANCE ?: buildDatabase(context, dispatcherProvider).also { INSTANCE = it }
             }
 
         fun getInstance(): AppDatabase = INSTANCE ?: throw DatabaseDoesNotExistException("Please initialize database with createInstance")
 
-        private fun buildDatabase(context: Context, schedulerProvider: SchedulerProvider): AppDatabase {
+        private fun buildDatabase(context: Context, dispatcherProvider: DispatcherProvider): AppDatabase {
             return Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java,
@@ -54,21 +55,17 @@ abstract class AppDatabase : RoomDatabase() {
                 object : RoomDatabase.Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
-                        val instance = createInstance(context, schedulerProvider)
-                        val completable1 =
-                            instance.nounDao().insertAll(initialNouns).subscribeOn(schedulerProvider.io)
-                        val completable2 =
-                            instance.verbDao().insertAll(initialVerbs).subscribeOn(schedulerProvider.io)
-                        val completable3 = instance.prepositionDao().insertAll(initialPrepositions)
-                            .subscribeOn(schedulerProvider.io)
-
-                        completable1.mergeWith(completable2).mergeWith(completable3)
-                            .observeOn(schedulerProvider.ui)
-                            .subscribeBy(
-                                onComplete = { Timber.v("Table Populated") },
-                                onError = { t -> Timber.e(t) }
-                            )
-
+                        val instance = createInstance(context, dispatcherProvider)
+                        runBlocking(dispatcherProvider.io) {
+                            try {
+                                instance.nounDao().insertAll(initialNouns)
+                                instance.verbDao().insertAll(initialVerbs)
+                                instance.prepositionDao().insertAll(initialPrepositions)
+                                Timber.v("Tables populated")
+                            } catch (e: Exception) {
+                                Timber.e(e,"Error initializing database")
+                            }
+                        }
                     }
                 }
             ).build()
