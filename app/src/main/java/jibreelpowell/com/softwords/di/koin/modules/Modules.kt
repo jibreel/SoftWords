@@ -11,7 +11,13 @@ import jibreelpowell.com.softwords.network.linguarobot.LinguaRobotApiService
 import jibreelpowell.com.softwords.network.utils.RapidApiHttpInterceptor
 import jibreelpowell.com.softwords.network.words.WordsApiService
 import jibreelpowell.com.softwords.settings.SettingsViewModel
-import jibreelpowell.com.softwords.storage.*
+import jibreelpowell.com.softwords.storage.AppDatabase
+import jibreelpowell.com.softwords.storage.NounDao
+import jibreelpowell.com.softwords.storage.PrepositionDao
+import jibreelpowell.com.softwords.storage.SentenceDao
+import jibreelpowell.com.softwords.storage.SentenceRepository
+import jibreelpowell.com.softwords.storage.VerbDao
+import jibreelpowell.com.softwords.storage.WordRepository
 import jibreelpowell.com.softwords.utils.DispatcherProvider
 import jibreelpowell.com.softwords.utils.DispatcherProviderImpl
 import jibreelpowell.com.softwords.utils.SchedulerProvider
